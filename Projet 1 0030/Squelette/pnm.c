@@ -123,7 +123,7 @@ int write_pnm(PNM *image, char* filename) {
    return 0;
 }
 
-static char *get_type(FILE* fic) {
+static int get_type(FILE* fic) {
 
     char* buffer[BUFFERSIZE];
     signed char n_magique[200];
@@ -230,8 +230,8 @@ static PNM **fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image
 }
 
 void display_content(int type, PNM *image){
-    for(int i = 0; i<image->image->ppm->n_lines){
-        for(int j = 0; j<image->image->ppm->n_columns){
+    for(int i = 0; i<image->image->ppm->n_lines; i++){
+        for(int j = 0; j<image->image->ppm->n_columns ; j++){
             printf("%d", image->image->ppm->matrice[i][j]);
         }
         printf("/n");
