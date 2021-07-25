@@ -63,5 +63,7 @@ int load_pnm(PNM **image, char* filename);
  */
 int write_pnm(PNM *image, char* filename);
 
+
+void display_content(int type, PNM *image);
 #endif // __PNM__
 

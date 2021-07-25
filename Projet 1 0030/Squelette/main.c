@@ -22,7 +22,10 @@
 int main(int argc, char *argv[]) {
 
    char *optstring = "";
+   PNM *image;
+   load_pnm(&image, "antilope.ppm");
 
+   display_content(1, image);
    /* Insérez le code ici */
 
    return 0;

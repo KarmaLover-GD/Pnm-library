@@ -22,7 +22,7 @@
  */
 
 typedef struct{
-    triplet[3]; // triplet RGB , 0-> rouge 1->vert 2->bleu
+   int triplet[3]; // triplet RGB , 0-> rouge 1->vert 2->bleu
 }RGB;
 
 
@@ -106,20 +106,13 @@ int load_pnm(PNM **image, char* filename) {
         sscanf(fic, "%d %d", lines, columns);
         if(lines >0 && columns >0){
         *image = build_PNM(1, lines, columns, 0);
-
-        if(*image != NULL){
-            for(int i =0; i<lines; i++){
+        fill_matrix(1, lines, columns, fic, *image);
+        
 
             }
         }
 
-        }
-    }
-        
-
-
-
-
+    fclose(fic);
    return 0;
 }
 
@@ -234,5 +227,14 @@ static PNM **fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image
         break;
     }
     return &image;
+}
+
+void display_content(int type, PNM *image){
+    for(int i = 0; i<image->image->ppm->n_lines){
+        for(int j = 0; j<image->image->ppm->n_columns){
+            printf("%d", image->image->ppm->matrice[i][j]);
+        }
+        printf("/n");
+    }
 }
 
