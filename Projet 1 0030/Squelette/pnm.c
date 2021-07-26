@@ -50,7 +50,7 @@ typedef struct{
     unsigned int n_columns;
     unsigned int n_lines;
     unsigned int valeur_max;
-    unsigned int **matrice
+    unsigned int **matrice;
 }PGM;
 /**
  * Définition du type opaque PPM
@@ -78,49 +78,13 @@ typedef struct{
 struct PNM_t {
     pnm *image;
 };
+static void pass_comment(FILE *fic, char*buffer){
+   assert(fic != NULL && buffer != NULL);
 
-
-int load_pnm(PNM **image, char* filename) {
-    assert(filename != NULL && image != NULL);
-
-    FILE *fic = fopen(filename, "r");
-    if (fic == NULL){
-        fclose(fic);
-        printf("erreur à l'ouverture du fic");
-        return -2;
-    }
-    
-
-    char buffer[BUFFERSIZE];
-
-    pass_comment(fic, buffer);
-
-    int type = get_type(fic);
-    int lines;
-    int columns;
-
-
-    
-    
-    if(type == 1){
-        sscanf(fic, "%d %d", lines, columns);
-        if(lines >0 && columns >0){
-        *image = build_PNM(1, lines, columns, 0);
-        fill_matrix(1, lines, columns, fic, *image);
-        
-
-            }
-        }
-
-    fclose(fic);
-   return 0;
-}
-
-int write_pnm(PNM *image, char* filename) {
-
-   /* Insérez le code ici */
-
-   return 0;
+   do
+   fgets(buffer, 100, fic);
+   while(strncmp(buffer, "#", 1) == 0);
+   
 }
 
 static int get_type(FILE* fic) {
@@ -140,19 +104,6 @@ static int get_type(FILE* fic) {
 
     }
     fclose(fic);
-}
-
-static int check_extension(){
-    return 1;
-}
-
-static void pass_comment(FILE *fic, char*buffer){
-   assert(fic != NULL && buffer != NULL);
-
-   do
-   fgets(buffer, 100, fic);
-   while(strncmp(buffer, "#", 1) == 0);
-   
 }
 
 static PNM *build_PNM(int type, int lines, int columns, int max_val){
@@ -209,8 +160,7 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val){
         
     
 }
-
-static PNM **fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image){
+static PNM *fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image){
     char buffer[BUFFERSIZE];
     switch (type)
     {
@@ -226,8 +176,62 @@ static PNM **fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image
     default:
         break;
     }
-    return &image;
+    return image;
 }
+
+int load_pnm(PNM **image, char* filename) {
+    assert(filename != NULL && image != NULL);
+
+    FILE *fic = fopen(filename, "r");
+    if (fic == NULL){
+        fclose(fic);
+        printf("erreur à l'ouverture du fic");
+        return -2;
+    }
+    
+
+    char buffer[BUFFERSIZE];
+
+    pass_comment(fic, buffer);
+
+    int type = get_type(fic);
+    int lines;
+    int columns;
+
+
+    
+    
+    if(type == 1){
+        sscanf(fic, "%d %d", lines, columns);
+        if(lines >0 && columns >0){
+        *image = build_PNM(1, lines, columns, 0);
+        fill_matrix(1, lines, columns, fic, *image);
+        
+
+            }
+        }
+
+    fclose(fic);
+   return 0;
+}
+
+int write_pnm(PNM *image, char* filename) {
+
+   /* Insérez le code ici */
+
+   return 0;
+}
+
+
+
+static int check_extension(){
+    return 1;
+}
+
+
+
+
+
 
 void display_content(int type, PNM *image){
     for(int i = 0; i<image->image->ppm->n_lines; i++){
