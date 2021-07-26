@@ -23,10 +23,13 @@ int main(int argc, char *argv[]) {
 
    char *optstring = "";
    PNM *image;
-   load_pnm(&image, "antilope.ppm");
+   PNM *mon_image;
+   mon_image = load_pnm(&image, "antilope.ppm");
 
-   display_content(1, image);
-   /* Insérez le code ici */
+    printf("%d %d",mon_image, image);
+
+   //display_content(1, image);
+
 
    return 0;
 }

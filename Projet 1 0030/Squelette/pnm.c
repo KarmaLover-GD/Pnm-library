@@ -87,22 +87,28 @@ static void pass_comment(FILE *fic, char*buffer){
    
 }
 
-static int get_type(FILE* fic) {
+static int get_type(FILE* fic, char *buffer) {
 
-    char* buffer[BUFFERSIZE];
-    signed char n_magique[200];
     pass_comment(fic, buffer);
-    while (fgets(n_magique, 200, fic) != NULL) {
-        if (strcmp(fgets(n_magique, 200, fic), "P1") == 0) {
+
+        if (strncmp(buffer, "P1", 2) == 0) {
+            printf("type pbm\n");
+            printf("%s", buffer);
             return 1;
-        } else if (strcmp(fgets(n_magique, 200, fic), "P2") == 0) {
+        } else if (strncmp(buffer, "P2", 2) == 0) {
+            printf("type pgm\n");
+            printf("%s", buffer);
             return 2;
-        } else if (strcmp(fgets(n_magique, 200, fic), "P3") == 0) {
+        } else if (strncmp(buffer, "P3", 2) == 0) {
+            printf("type ppm\n");
+            printf("%s", buffer);
             return 3;
         } else
+            printf("unknown type");
+            printf("%s", buffer);
             return 0;
 
-    }
+    
     fclose(fic);
 }
 
@@ -191,10 +197,7 @@ int load_pnm(PNM **image, char* filename) {
     
 
     char buffer[BUFFERSIZE];
-
-    pass_comment(fic, buffer);
-
-    int type = get_type(fic);
+    int type = get_type(fic, buffer);
     int lines;
     int columns;
 
@@ -212,7 +215,7 @@ int load_pnm(PNM **image, char* filename) {
         }
 
     fclose(fic);
-   return 0;
+   return *image;
 }
 
 int write_pnm(PNM *image, char* filename) {
@@ -234,11 +237,15 @@ static int check_extension(){
 
 
 void display_content(int type, PNM *image){
-    for(int i = 0; i<image->image->ppm->n_lines; i++){
-        for(int j = 0; j<image->image->ppm->n_columns ; j++){
-            printf("%d", image->image->ppm->matrice[i][j]);
-        }
-        printf("/n");
-    }
+    assert(image != NULL);
+    printf("yep");
+    printf("%d", image->image->ppm->n_lines);
+
+    // for(int i = 0; i<image->image->ppm->n_lines; i++){
+    //     for(int j = 0; j<image->image->ppm->n_columns ; j++){
+    //         printf("%d", image->image->ppm->matrice[i][j]);
+    //     }
+    //     printf("/n");
+    //}
 }
 

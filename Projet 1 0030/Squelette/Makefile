@@ -7,10 +7,11 @@
 ## Variables
 
 # Tools & flags
-CC=gcc
+CC=gcc 
 CFLAGS=--std=c99 --pedantic -Wall -W -Wmissing-prototypes
 LD=gcc
 LDFLAGS=
+GDBFLAGS = -g
 
 # Files
 EXEC=pnm
@@ -22,7 +23,7 @@ OBJECTS=main.o pnm.o
 all: $(EXEC)
 
 pnm: $(OBJECTS)
-	$(LD) -o $(EXEC) $(OBJECTS) $(LDFLAGS)
+	$(LD) -o $(EXEC) $(OBJECTS) $(LDFLAGS) $(GDBFLAGS)
 
 main.o: main.c
 	$(CC) -c main.c -o main.o $(CFLAGS)
