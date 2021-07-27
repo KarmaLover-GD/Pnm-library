@@ -24,11 +24,11 @@ int main(int argc, char *argv[]) {
    char *optstring = "";
    PNM *image;
    PNM *mon_image;
-   mon_image = load_pnm(&image, "antilope.ppm");
+   mon_image = load_pnm(&image, "hippocampe.pbm");
 
     printf("%d %d",mon_image, image);
 
-   //display_content(1, image);
+   display_content(1, image);
 
 
    return 0;
