@@ -65,10 +65,9 @@ typedef struct{
 }PPM;
 
  typedef union{
-   PBM *pbm;
-   PGM *pgm;
-   PPM *ppm;
-}pnm;
+   RGB** matrice_color;
+   int **matrice_black;
+}arraytype;
 /**
  * Définition du type opaque PNM
  *
@@ -76,7 +75,12 @@ typedef struct{
 
 
 struct PNM_t {
-    pnm *image;
+    int lines;
+    int columns;
+    int max_value;
+    int type;
+    arraytype matrice;
+    
 };
 static void pass_comment(FILE *fic, char*buffer){
    assert(fic != NULL && buffer != NULL);
@@ -124,17 +128,20 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val){
     switch (type)
     {
     case 1:
-        printf("on a bien eu le type %d", type);
-        image->image->pbm->n_columns = columns;
-        //image->image->pbm->n_lines = lines;
-        //image->image->pbm->matrice = malloc(sizeof(int)*lines*columns);
 
-        // if(image->image->pbm->matrice == NULL){
-        //     free(image->image->pbm->matrice);
-        //     free(image);
-        //     printf("erreur encodage matrice");
-        //     return NULL;
-        // }
+        image->lines = lines;
+        image->type = type;
+        image->columns = columns;
+        image->matrice.matrice_black = malloc(sizeof(int)*lines*columns);
+        printf(" les différents champs ont bien étés remplis %d %d %d\n", image->columns, image->lines, image->type);
+       
+
+        if(image->matrice.matrice_black == NULL){
+            free(image->matrice.matrice_black);
+            free(image);
+            printf("erreur encodage matrice");
+            return NULL;
+        }
         break;
     }
 
@@ -171,27 +178,30 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val){
 //             return NULL;
 //         break;
 
-//     return image;
-//     }
+    return image;
+     }
         
     
-// }
-// static PNM *fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image){
-//     char buffer[BUFFERSIZE];
-//     switch (type)
-//     {
-//     case 1:
-//         pass_comment(fic, buffer);
-//         for(int i = 0; i<lines; i++){
-//             for(int j =0; i<columns; i++){
-//                 sscanf("%d", &image->image->pbm->matrice[i][j]);
-//             }
-//         }
-//         break;
+
+static PNM *fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image){
+    char buffer[BUFFERSIZE];
+    switch (type)
+    {
+    case 1:
+        pass_comment(fic, buffer);
+        printf("%s", buffer);
+        // for(int i = 0; i<lines; i++){
+        //     for(int j =0; i<columns; i++){
+        //         sscanf(buffer, "%d", image->matrice.matrice_black[i][j]);
+                
+        //     }
+        //     pass_comment(fic, buffer);
+        // }
+        break;
     
-//     default:
-//         break;
-//     }
+    default:
+        break;
+    }
     return image;
 }
 
@@ -223,7 +233,7 @@ int load_pnm(PNM **image, char* filename) {
         printf("lines :%d columns :%d\n", lines, columns);
         if(lines >0 && columns >0){
         *image = build_PNM(1, lines, columns, 0);
-        //fill_matrix(1, lines, columns, fic, *image);
+        fill_matrix(1, lines, columns, fic, *image);
         
 
             }
@@ -254,7 +264,7 @@ static int check_extension(){
 void display_content(int type, PNM *image){
     assert(image != NULL);
     printf("yep");
-    printf("%d", image->image->ppm->n_lines);
+    //printf("%d", image->n_lines);
 
     // for(int i = 0; i<image->image->ppm->n_lines; i++){
     //     for(int j = 0; j<image->image->ppm->n_columns ; j++){
