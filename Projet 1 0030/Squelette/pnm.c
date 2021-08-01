@@ -15,7 +15,7 @@
 #include <string.h>
 
 #include "pnm.h"
-#define BUFFERSIZE 512
+#define BUFFERSIZE 1024
 /**
  * Définition de la structure RGB
  *
@@ -79,7 +79,8 @@ struct PNM_t {
     int columns;
     int max_value;
     int type;
-    arraytype matrice;
+    RGB **matrice_rgb;
+    int **matrice_black;
     
 };
 static void pass_comment(FILE *fic, char*buffer){
@@ -116,6 +117,10 @@ static int get_type(FILE* fic, char *buffer) {
     fclose(fic);
 }
 
+static char* fill_buffer(char *buffer, char* max_size, FILE* fic){
+
+};
+
 static PNM *build_PNM(int type, int lines, int columns, int max_val){
     
     PNM *image = malloc(sizeof(PNM));
@@ -132,12 +137,19 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val){
         image->lines = lines;
         image->type = type;
         image->columns = columns;
-        image->matrice.matrice_black = malloc(sizeof(int)*lines*columns);
         printf(" les différents champs ont bien étés remplis %d %d %d\n", image->columns, image->lines, image->type);
+        image->matrice_black = malloc(sizeof(int)*2*lines);
+        for(int i = 0; i<lines; i++){
+            image->matrice_black[i] = malloc(sizeof(int)*columns);
+        }
+        
+        
        
-
-        if(image->matrice.matrice_black == NULL){
-            free(image->matrice.matrice_black);
+        
+        if(image->matrice_black == NULL){
+        for(int i =0; i<lines; i++){
+            free(image->matrice_black[i]);
+        }
             free(image);
             printf("erreur encodage matrice");
             return NULL;
@@ -185,18 +197,25 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val){
 
 static PNM *fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image){
     char buffer[BUFFERSIZE];
+    unsigned int pixel;
+    unsigned int buffer_counter = 0;
     switch (type)
     {
     case 1:
-        pass_comment(fic, buffer);
-        printf("%s", buffer);
-        // for(int i = 0; i<lines; i++){
-        //     for(int j =0; i<columns; i++){
-        //         sscanf(buffer, "%d", image->matrice.matrice_black[i][j]);
+
+        //pass_comment(fic, buffer);
+       
+        for(int i = 0; i<lines; i++){
+            for(int j =0; j<columns; j++){
+                fscanf(fic, "%d ", &pixel);
+    
+                image->matrice_black[i][j] = pixel;
+                 if(i == lines-1 && j> columns -5){
+                     printf("%u",image->matrice_black[i][j]);
+            }
                 
-        //     }
-        //     pass_comment(fic, buffer);
-        // }
+            }
+        }
         break;
     
     default:
