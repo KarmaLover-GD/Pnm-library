@@ -79,7 +79,7 @@ struct PNM_t {
     int columns;
     int max_value;
     int type;
-    RGB **matrice_rgb;
+    int **matrice_rgb[3];
     int **matrice_black;
     
 };
@@ -198,6 +198,7 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val){
 static PNM *fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image){
     char buffer[BUFFERSIZE];
     unsigned int pixel;
+    unsigned int red, green, blue;
     unsigned int buffer_counter = 0;
     switch (type)
     {
@@ -212,11 +213,35 @@ static PNM *fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image)
                 image->matrice_black[i][j] = pixel;
                  if(i == lines-1 && j> columns -5){
                      printf("%u",image->matrice_black[i][j]);
-            }
-                
+                }
             }
         }
         break;
+    case 2:
+        for(int i = 0; i<lines; i++){
+            for(int j =0; j<columns; j++){
+                fscanf(fic, "%d ", &pixel);
+    
+                image->matrice_black[i][j] = pixel;
+                 if(i == lines-1 && j> columns -5){
+                     printf("%u",image->matrice_black[i][j]);
+                }
+            }
+        }
+        break;
+    case 3:
+        for(int i = 0; i<lines; i++){
+            for(int j =0; j<columns; j++){
+                fscanf(fic, "%d %d %d ", &red, &green, &blue);
+    
+                image->matrice_rgb[i][j][0] = red;
+                image->matrice_rgb[i][j][1] = green;
+                image->matrice_rgb[i][j][2] = blue;
+                 if(i == lines-1 && j> columns -5){
+                     printf("%u",image->matrice_black[i][j]);
+                }
+            }
+        }
     
     default:
         break;
