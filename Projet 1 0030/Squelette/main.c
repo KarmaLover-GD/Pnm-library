@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
    char *optstring = "";
    PNM *image;
    PNM *mon_image;
-   mon_image = load_pnm(&image, "totem.pgm");
+   mon_image = load_pnm(&image, "arcenciel.ppm");
    
     //printf("%d %d",mon_image, image);
 
