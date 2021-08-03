@@ -28,9 +28,7 @@ int main(int argc, char *argv[]) {
 
    destroy_pnm(image);
    
-    //printf("%d %d",mon_image, image);
-
-   //display_content(1, image);
+    
 
 
    return 0;
