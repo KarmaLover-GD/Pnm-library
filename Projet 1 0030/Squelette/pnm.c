@@ -190,9 +190,9 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val){
         image->columns = columns;
         image->lines = lines;
         image->max_value = max_val;
-           image->matrice_rgb = malloc(sizeof(RGB)*2*lines);
+           image->matrice_rgb = malloc(sizeof(RGB)*lines);
           for(int i = 0; i<lines; i++){
-            image->matrice_rgb[i] = malloc(sizeof(RGB)*2*columns);
+            image->matrice_rgb[i] = malloc(sizeof(RGB)*columns);
         }
         
         
@@ -250,7 +250,7 @@ static PNM *fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image)
         for(int i = 0; i<lines; i++){
             for(int j =0; j<columns; j++){
                 fscanf(fic, "%d %d %d ", &red, &green, &blue);
-                printf("(%d, %d)", i, j);
+                printf(" %d %d %d", red, green, blue);
               
                 //printf(" (%d, %d, %d)", red, green, blue);
                 image->matrice_rgb[i][j].red = red;
@@ -330,7 +330,8 @@ int load_pnm(PNM **image, char* filename) {
 
 
     fclose(fic);
-   return *image;
+
+   return 0;
 }
 
 int write_pnm(PNM *image, char* filename) {
@@ -364,3 +365,42 @@ void display_content(int type, PNM *image){
     //}
 }
 
+
+void destroy_pnm(PNM *image){
+    assert(image != NULL);
+    switch(image->type){
+
+        case 1:
+    //printf("image content : %d, %d, %d, %d", image->type, image->lines, image->columns, image->matrice_black[0][2]);
+
+            for(int i =0; i<image->lines; i++){
+                free(image->matrice_black[i]);
+            }
+            free(image->matrice_black);
+            free(image);
+
+            break;
+        case 2:
+            
+            for(int i =0; i<image->lines; i++){
+                free(image->matrice_black[i]);
+            }
+            free(image->matrice_black);
+            free(image);
+
+            break;
+        case 3:
+
+            for(int i = 0; i<image->lines; i++){
+                free(image->matrice_rgb[i]);
+            }
+            free(image->matrice_rgb);
+            free(image);
+
+            break;
+        default:
+            break;
+
+    }
+
+}
