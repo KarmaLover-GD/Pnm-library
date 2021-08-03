@@ -24,8 +24,9 @@ int main(int argc, char *argv[]) {
    char *optstring = "";
    PNM *image;
    
-   load_pnm(&image, "totem.pgm");
+   load_pnm(&image, "washington.pbm");
 
+   write_pnm(image, "washiwash.pbm");
    destroy_pnm(image);
    
     

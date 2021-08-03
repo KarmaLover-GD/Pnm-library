@@ -161,11 +161,12 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val){
     case 2: ;
         
         char buffer[BUFFERSIZE];
-        int max_val; 
+       
 
         image->columns = columns;
         image->lines = lines;
-       
+        image->type = type;
+        printf(" les différents champs ont bien étés remplis %d %d %d\n", image->columns, image->lines, image->type);
         image->max_value = max_val;
         image->matrice_black = malloc(sizeof(int)*2*lines);
         for(int i = 0; i<lines; i++){
@@ -189,6 +190,7 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val){
        
         image->columns = columns;
         image->lines = lines;
+        image->type = type;
         image->max_value = max_val;
            image->matrice_rgb = malloc(sizeof(RGB)*lines);
           for(int i = 0; i<lines; i++){
@@ -302,7 +304,7 @@ int load_pnm(PNM **image, char* filename) {
     
             }
         }else if(type == 2){
-            printf("traitement du fichier ppm\n");
+            printf("traitement du fichier pgm\n");
             sscanf(buffer, "%d %d", &lines, &columns);
             printf("lines :%d columns :%d\n", lines, columns);
             pass_comment(fic, buffer);
@@ -310,7 +312,7 @@ int load_pnm(PNM **image, char* filename) {
             printf("ON A MAXVAL QUI EST DE  %d\n", max_val);
 
             if(lines >0 && columns >0){
-                *image = build_PNM(type, lines, columns, fic);
+                *image = build_PNM(type, lines, columns, max_val);
             fill_matrix(type, lines, columns, fic, *image);
             }
         }else if(type == 3){
@@ -323,7 +325,7 @@ int load_pnm(PNM **image, char* filename) {
 
 
             if(lines >0 && columns >0){
-            *image = build_PNM(type, lines, columns, fic);
+            *image = build_PNM(type, lines, columns, max_val);
             fill_matrix(type, lines, columns, fic, *image);
             }
         }
@@ -335,8 +337,58 @@ int load_pnm(PNM **image, char* filename) {
 }
 
 int write_pnm(PNM *image, char* filename) {
+    assert(filename != NULL && image != NULL);
 
-   /* Insérez le code ici */
+    FILE* fic = fopen(filename, "w");
+        if(fic == NULL){
+            printf("error, couldn't open new file");
+            return -1;
+        }
+
+   switch (image->type)
+   {
+    case 1: ;
+       
+       fprintf(fic, "P1\n%d %d\n", image->lines, image->columns);
+       for(int i = 0; i< image->lines; i++){
+           for(int j =0; j<image->columns; j++){
+               fprintf(fic, "%d ", image->matrice_black[i][j]);
+           }
+           fprintf(fic, "\n");
+
+       }
+       fclose(fic);
+       break;
+    case 2: ;
+       
+       fprintf(fic, "P2\n%d %d\n%d\n", image->lines, image->columns, image->max_value);
+       for(int i = 0; i< image->lines; i++){
+           for(int j =0; j<image->columns; j++){
+               fprintf(fic, "%d ", image->matrice_black[i][j]);
+           }
+           fprintf(fic, "\n");
+       }
+       fclose(fic);
+       break;
+    case 3: ;
+         
+        
+        fprintf(fic, "P3\n %d %d\n%d\n", image->lines, image->columns, image->max_value);
+        for(int i = 0; i< image->lines; i++){
+            for(int j =0; j<image->columns; j++){
+                fprintf(fic, "%d %d %d ", image->matrice_rgb[i][j].red, image->matrice_rgb[i][j].green, image->matrice_rgb[i][j].blue);
+            }
+           fprintf(fic, "\n");
+        }
+        fclose(fic);
+       break;
+   
+    default:
+        printf("PK defaut alors que le type est : %d coord : (%d, %d)", image->type, image->lines, image->columns);
+        fclose(fic);
+        return -2;
+       break;
+   }
 
    return 0;
 }
@@ -352,18 +404,6 @@ static int check_extension(){
 
 
 
-void display_content(int type, PNM *image){
-    assert(image != NULL);
-    printf("yep");
-    //printf("%d", image->n_lines);
-
-    // for(int i = 0; i<image->image->ppm->n_lines; i++){
-    //     for(int j = 0; j<image->image->ppm->n_columns ; j++){
-    //         printf("%d", image->image->ppm->matrice[i][j]);
-    //     }
-    //     printf("/n");
-    //}
-}
 
 
 void destroy_pnm(PNM *image){
