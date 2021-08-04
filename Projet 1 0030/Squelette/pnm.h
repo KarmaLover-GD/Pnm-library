@@ -89,5 +89,8 @@ void destroy_pnm(PNM *image);
  */
 void check_extension(char *input_file, char *output_file, char *format_file, PNM *image);
 
+/*
+*/
+int check_filename(char * filename);
 #endif // __PNM__
 

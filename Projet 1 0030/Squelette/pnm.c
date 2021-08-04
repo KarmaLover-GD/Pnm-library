@@ -374,9 +374,8 @@ int write_pnm(PNM *image, char* filename) {
        break;
    
     default:
-       
         fclose(fic);
-        return -2;
+        return -3;
        break;
    }
 
@@ -427,7 +426,20 @@ void check_extension(char *input_file, char *output_file, char *format_file, PNM
     char input_extension[5] = "";
     char output_extension[5] = "";
 
-    
+    // if(check_filename(output_file) != 1){
+    //     printf("Output file contains a forbidden character do you want to type it again ?\n");
+    //     printf("Type 1 for yes and Anything else to terminate the program\n");
+    //     int choiceo;
+    //     scanf("%d", &choiceo);
+    //     if(choiceo == 1){
+    //         printf("type your new output file name\n");
+    //         scanf("%s", output_file);
+    //         check_extension(input_file, output_file, format_file, image);
+    //     }else{
+    //         printf("Goodbye");
+    //         return;
+    //     }
+    // }
 
    for(int i = 3; i>0; i--){
       strncat(input_extension, &input_file[strlen(input_file)-i], 1);
@@ -476,4 +488,22 @@ void check_extension(char *input_file, char *output_file, char *format_file, PNM
 
    }
 
+}
+
+
+int check_filename(char *filename){
+    for(int i =0; i<strlen(filename-1); i++){
+        
+       if(strncmp(filename[i], "/", 1) != 0 && strncmp(filename[i], "\\", 1) != 0 && strncmp(filename[i], ":", 1) != 0 && strncmp(filename[i], "*", 1) != 0 &&
+       strncmp(filename[i], "?", 1) != 0 && strncmp(filename[i], """", 1) != 0 && strncmp(filename[i], "<", 1) != 0 && strncmp(filename[i], ">", 1) != 0 &&
+       strncmp(filename[i], "|", 1) != 0){
+           printf("%c", filename[i]);
+           return 1;
+
+       }else{
+           printf("%c", filename[i]);
+           return 0;
+       }
+
+    }
 }
