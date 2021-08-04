@@ -444,6 +444,7 @@ void check_extension(char *input_file, char *output_file, char *format_file, PNM
             scanf("%s", format_file);
             check_extension(input_file, output_file, format_file, image);
         }else{
+            printf("Goodbye");
             return;
         }
 

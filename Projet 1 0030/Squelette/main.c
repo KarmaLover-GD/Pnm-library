@@ -48,20 +48,8 @@ int main(int argc, char *argv[]) {
     }// fin switch
    }
    
-   /*
-   Robustesse du code:   
-   */
 
   check_extension(input_file, output_file, format_file, image);
-
-   
-
-   
-
-  
-   
-    
-
 
    return 0;
 }
