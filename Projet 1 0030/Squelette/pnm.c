@@ -99,23 +99,17 @@ static int get_type(FILE* fic, char *buffer) {
     pass_comment(fic, buffer);
 
         if (strncmp(buffer, "P1", 2) == 0) {
-            printf("type pbm\n");
             printf("%s", buffer);
             return 1;
         } else if (strncmp(buffer, "P2", 2) == 0) {
-            printf("type pgm\n");
             printf("%s", buffer);
             return 2;
         } else if (strncmp(buffer, "P3", 2) == 0) {
-            printf("type ppm\n");
             printf("%s", buffer);
             return 3;
         } else
-            printf("unknown type");
             printf("%s", buffer);
             return 0;
-
-    
     fclose(fic);
 }
 
@@ -137,7 +131,7 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val){
         image->lines = lines;
         image->type = type;
         image->columns = columns;
-        printf(" les différents champs ont bien étés remplis %d %d %d\n", image->columns, image->lines, image->type);
+ 
         image->matrice_black = malloc(sizeof(int)*2*lines);
         for(int i = 0; i<lines; i++){
             image->matrice_black[i] = malloc(sizeof(int)*columns);
@@ -166,7 +160,7 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val){
         image->columns = columns;
         image->lines = lines;
         image->type = type;
-        printf(" les différents champs ont bien étés remplis %d %d %d\n", image->columns, image->lines, image->type);
+
         image->max_value = max_val;
         image->matrice_black = malloc(sizeof(int)*2*lines);
         for(int i = 0; i<lines; i++){
@@ -229,9 +223,7 @@ static PNM *fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image)
                 fscanf(fic, "%d ", &pixel);
     
                 image->matrice_black[i][j] = pixel;
-                 if(i == lines-1 && j> columns -5){
-                     printf("%u",image->matrice_black[i][j]);
-                }
+                
             }
         }
         break;
@@ -242,9 +234,7 @@ static PNM *fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image)
               
             
                 image->matrice_black[i][j] = pixel;
-                 if(i == lines-1 && j > columns -5){
-                   printf("%u ",image->matrice_black[i][j]);
-                }
+              
             }
         }
         break;
@@ -273,7 +263,7 @@ static PNM *fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image)
 
 int load_pnm(PNM **image, char* filename) {
     assert(filename != NULL && image != NULL);
-
+    //printf("Filename : %s", filename);
     FILE *fic = fopen(filename, "r");
     if (fic == NULL){
         fclose(fic);
@@ -285,7 +275,7 @@ int load_pnm(PNM **image, char* filename) {
     char buffer[BUFFERSIZE];
    
     int type = get_type(fic, buffer);
-    printf("type %d ok\n", type);
+   
     int lines;
     int columns;
     int max_val;
@@ -294,9 +284,9 @@ int load_pnm(PNM **image, char* filename) {
     
     pass_comment(fic, buffer);
     if(type == 1){
-        printf("traitement du fichier pbm\n");
+        
         sscanf(buffer, "%d %d", &lines, &columns);
-        printf("lines :%d columns :%d\n", lines, columns);
+        
         if(lines >0 && columns >0){
         *image = build_PNM(type, lines, columns, fic);
         fill_matrix(type, lines, columns, fic, *image);
@@ -304,12 +294,12 @@ int load_pnm(PNM **image, char* filename) {
     
             }
         }else if(type == 2){
-            printf("traitement du fichier pgm\n");
+       
             sscanf(buffer, "%d %d", &lines, &columns);
-            printf("lines :%d columns :%d\n", lines, columns);
+           
             pass_comment(fic, buffer);
             sscanf(buffer, "%d", &max_val);
-            printf("ON A MAXVAL QUI EST DE  %d\n", max_val);
+          
 
             if(lines >0 && columns >0){
                 *image = build_PNM(type, lines, columns, max_val);
@@ -384,7 +374,7 @@ int write_pnm(PNM *image, char* filename) {
        break;
    
     default:
-        printf("PK defaut alors que le type est : %d coord : (%d, %d)", image->type, image->lines, image->columns);
+       
         fclose(fic);
         return -2;
        break;
@@ -394,24 +384,11 @@ int write_pnm(PNM *image, char* filename) {
 }
 
 
-
-static int check_extension(){
-    return 1;
-}
-
-
-
-
-
-
-
-
 void destroy_pnm(PNM *image){
     assert(image != NULL);
     switch(image->type){
 
         case 1:
-    //printf("image content : %d, %d, %d, %d", image->type, image->lines, image->columns, image->matrice_black[0][2]);
 
             for(int i =0; i<image->lines; i++){
                 free(image->matrice_black[i]);
@@ -442,5 +419,60 @@ void destroy_pnm(PNM *image){
             break;
 
     }
+
+}
+
+
+void check_extension(char *input_file, char *output_file, char *format_file, PNM *image){
+    char input_extension[5] = "";
+    char output_extension[5] = "";
+
+    
+
+   for(int i = 3; i>0; i--){
+      strncat(input_extension, &input_file[strlen(input_file)-i], 1);
+      strncat(output_extension, &output_file[strlen(output_file)-i], 1);
+   }
+
+    if(strncmp(format_file, "pgm", 3) != 0 && strncmp(format_file, "pbm", 3) != 0 && strncmp(format_file, "ppm", 3) != 0){
+        printf("Unallowed format chosen, the only allowed formats are pgm, ppm and pbm, you chosed : %s\n\n", format_file);
+        printf("Do you want to change format ? press 1 to change and press anything alse to terminate the program\n");
+        int choicef;
+        scanf("%d", &choicef);
+        if(choicef == 1){
+            printf("chose new format\n");
+            scanf("%s", format_file);
+            check_extension(input_file, output_file, format_file, image);
+        }else{
+            return;
+        }
+
+    }
+
+   if((strncmp(format_file, input_extension, 3) == 0) && (strncmp(format_file, output_extension, 3) == 0))
+   {
+      printf("Format file :%s Input extension : %s, Output extension : %s\n",format_file, input_extension, output_extension);      
+      printf("Format : %s, Input : %s, Output : %s\n", format_file, input_file, output_file);
+      load_pnm(&image, input_file);
+      write_pnm(image, output_file);
+      destroy_pnm(image);
+
+   }else{
+    printf("Different files extensions don't match : Chosen file extension : %s, Input file extension :%s, Output file extension :%s\n",
+                                     format_file, input_extension, output_extension);
+    printf("Do you want to change the given data ?\n");
+    int choice;
+    printf("Press 1 for yes and anything To terminate the program\n");
+    scanf("%d", &choice);
+    if(choice == 1){
+        printf("Give us the new data (the order is : format input_file output_file) separated by spaces\n");
+        scanf("%s %s %s", format_file, input_file, output_file);
+        check_extension(input_file, output_file, format_file, image);
+    }else{
+        printf("Goodbye");
+        return;
+    }
+
+   }
 
 }

@@ -65,7 +65,7 @@ int write_pnm(PNM *image, char* filename);
 
 
 void destroy_pnm(PNM *image);
-
+void check_extension(char *input_file, char *output_file, char *format_file, PNM *image);
 
 #endif // __PNM__
 
