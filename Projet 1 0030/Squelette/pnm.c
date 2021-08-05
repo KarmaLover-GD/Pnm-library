@@ -24,52 +24,9 @@
 typedef struct{
    int red;
    int green;
-   int blue;// triplet RGB , 0-> rouge 1->vert 2->bleu
+   int blue;
 }RGB;
 
-
-
-
-
-/**
- * Définition du type opaque PBM
- *
- */
-
-typedef struct{
-    char *n_magique;
-    unsigned int n_columns;
-    unsigned int n_lines;
-    unsigned int **matrice; 
-}PBM;
-/**
- * Définition du type opaque PGM
- *
- */
-
-typedef struct{
-    char *n_magique;
-    unsigned int n_columns;
-    unsigned int n_lines;
-    unsigned int valeur_max;
-    unsigned int **matrice;
-}PGM;
-/**
- * Définition du type opaque PPM
- *
- */
-typedef struct{
-    char *n_magique;
-    unsigned int n_columns;
-    unsigned int n_lines;
-    unsigned int valeur_max;
-    RGB **matrice;
-}PPM;
-
- typedef union{
-   RGB** matrice_color;
-   int **matrice_black;
-}arraytype;
 /**
  * Définition du type opaque PNM
  *
@@ -81,7 +38,7 @@ struct PNM_t {
     int columns;
     int max_value;
     int type;
-    RGB **matrice_rgb;
+    int **matrice_rgb;
     int **matrice_black;
     
 };
@@ -144,6 +101,7 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val){
         for(int i =0; i<lines; i++){
             free(image->matrice_black[i]);
         }
+            free(image->matrice_black);
             free(image);
             printf("erreur encodage matrice");
             return NULL;
@@ -172,6 +130,7 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val){
             for(int i =0; i<lines; i++){
                 free(image->matrice_black[i]);
                 }
+                free(image->matrice_black);
             free(image);
             printf("erreur encodage matrice");
             return NULL;
@@ -186,9 +145,9 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val){
         image->lines = lines;
         image->type = type;
         image->max_value = max_val;
-           image->matrice_rgb = malloc(sizeof(RGB)*lines);
+           image->matrice_rgb = malloc(sizeof(int)*2*lines);
           for(int i = 0; i<lines; i++){
-            image->matrice_rgb[i] = malloc(sizeof(RGB)*columns);
+            image->matrice_rgb[i] = malloc(sizeof(int)*3*columns);
         }
         
         
@@ -240,18 +199,15 @@ static PNM *fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image)
         break;
     case 3:
         for(int i = 0; i<lines; i++){
-            for(int j =0; j<columns; j++){
+            for(int j =0; j<columns ; j+=3){
+               
                 fscanf(fic, "%d %d %d ", &red, &green, &blue);
-                printf(" %d %d %d", red, green, blue);
-              
                 //printf(" (%d, %d, %d)", red, green, blue);
-                image->matrice_rgb[i][j].red = red;
-                image->matrice_rgb[i][j].green = green;
-                image->matrice_rgb[i][j].blue = blue;
+                image->matrice_rgb[i][j] = red;
+                image->matrice_rgb[i][j+1] = green;
+                image->matrice_rgb[i][j+2] = blue;
                 
-                 if(i == lines-1 && j> columns -5){
-                     printf("%u",image->matrice_black[i][j]);
-                }
+              
             }
         }
     
@@ -365,8 +321,8 @@ int write_pnm(PNM *image, char* filename) {
         
         fprintf(fic, "P3\n %d %d\n%d\n", image->lines, image->columns, image->max_value);
         for(int i = 0; i< image->lines; i++){
-            for(int j =0; j<image->columns; j++){
-                fprintf(fic, "%d %d %d ", image->matrice_rgb[i][j].red, image->matrice_rgb[i][j].green, image->matrice_rgb[i][j].blue);
+            for(int j =0; j<image->columns; j+=3){
+                fprintf(fic, "%d %d %d ", image->matrice_rgb[i][j], image->matrice_rgb[i][j+1], image->matrice_rgb[i][+2]);
             }
            fprintf(fic, "\n");
         }
