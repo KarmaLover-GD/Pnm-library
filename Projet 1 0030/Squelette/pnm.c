@@ -199,10 +199,9 @@ static PNM *fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image)
         break;
     case 3:
         for(int i = 0; i<lines; i++){
-            for(int j =0; j<columns ; j+=3){
+            for(int j =0; j<columns*3 ; j+=3){
                
                 fscanf(fic, "%d %d %d ", &red, &green, &blue);
-                //printf(" (%d, %d, %d)", red, green, blue);
                 image->matrice_rgb[i][j] = red;
                 image->matrice_rgb[i][j+1] = green;
                 image->matrice_rgb[i][j+2] = blue;
@@ -321,8 +320,8 @@ int write_pnm(PNM *image, char* filename) {
         
         fprintf(fic, "P3\n %d %d\n%d\n", image->lines, image->columns, image->max_value);
         for(int i = 0; i< image->lines; i++){
-            for(int j =0; j<image->columns; j+=3){
-                fprintf(fic, "%d %d %d ", image->matrice_rgb[i][j], image->matrice_rgb[i][j+1], image->matrice_rgb[i][+2]);
+            for(int j =0; j<image->columns * 3; j+=3){
+                fprintf(fic, "%d %d %d ", image->matrice_rgb[i][j], image->matrice_rgb[i][j+1], image->matrice_rgb[i][j+2]);
             }
            fprintf(fic, "\n");
         }
