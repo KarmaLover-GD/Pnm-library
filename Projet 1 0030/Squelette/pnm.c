@@ -38,8 +38,7 @@ struct PNM_t {
     int columns;
     int max_value;
     int type;
-    int **matrice_rgb;
-    int **matrice_black;
+    int **matrice;
     
 };
 static void pass_comment(FILE *fic, char*buffer){
@@ -64,9 +63,11 @@ static int get_type(FILE* fic, char *buffer) {
         } else if (strncmp(buffer, "P3", 2) == 0) {
             printf("%s", buffer);
             return 3;
-        } else
+        } else{
             printf("%s", buffer);
             return 0;
+        }
+            
     fclose(fic);
 }
 
@@ -89,19 +90,19 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val){
         image->type = type;
         image->columns = columns;
  
-        image->matrice_black = malloc(sizeof(int)*2*lines);
+        image->matrice = malloc(sizeof(int)*2*lines);
         for(int i = 0; i<lines; i++){
-            image->matrice_black[i] = malloc(sizeof(int)*columns);
+            image->matrice[i] = malloc(sizeof(int)*columns);
         }
         
         
        
         
-        if(image->matrice_black == NULL){
+        if(image->matrice == NULL){
         for(int i =0; i<lines; i++){
-            free(image->matrice_black[i]);
+            free(image->matrice[i]);
         }
-            free(image->matrice_black);
+            free(image->matrice);
             free(image);
             printf("erreur encodage matrice");
             return NULL;
@@ -111,26 +112,24 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val){
 
 
     case 2: ;
-        
-        char buffer[BUFFERSIZE];
-       
+  
 
         image->columns = columns;
         image->lines = lines;
         image->type = type;
 
         image->max_value = max_val;
-        image->matrice_black = malloc(sizeof(int)*2*lines);
+        image->matrice = malloc(sizeof(int)*2*lines);
         for(int i = 0; i<lines; i++){
-            image->matrice_black[i] = malloc(sizeof(int)*columns);
+            image->matrice[i] = malloc(sizeof(int)*columns);
         }
         
         
-        if(image->matrice_black == NULL){
+        if(image->matrice == NULL){
             for(int i =0; i<lines; i++){
-                free(image->matrice_black[i]);
+                free(image->matrice[i]);
                 }
-                free(image->matrice_black);
+                free(image->matrice);
             free(image);
             printf("erreur encodage matrice");
             return NULL;
@@ -145,16 +144,17 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val){
         image->lines = lines;
         image->type = type;
         image->max_value = max_val;
-           image->matrice_rgb = malloc(sizeof(int)*2*lines);
+           image->matrice = malloc(sizeof(int)*2*lines);
           for(int i = 0; i<lines; i++){
-            image->matrice_rgb[i] = malloc(sizeof(int)*3*columns);
+            image->matrice[i] = malloc(sizeof(int)*3*columns);
         }
         
         
-        if(image->matrice_rgb == NULL){
+        if(image->matrice == NULL){
             for(int i =0; i<lines; i++){
-                free(image->matrice_rgb[i]);
+                free(image->matrice[i]);
                 }
+                free(image->matrice);
             free(image);
             printf("erreur encodage matrice");
             return NULL;
@@ -167,10 +167,10 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val){
     
 
 static PNM *fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image){
-    char buffer[BUFFERSIZE];
-    unsigned int pixel;
-    unsigned int red, green, blue;
-    unsigned int buffer_counter = 0;
+    
+    int pixel;
+    int red, green, blue;
+    
     switch (type)
     {
     case 1:
@@ -181,7 +181,7 @@ static PNM *fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image)
             for(int j =0; j<columns; j++){
                 fscanf(fic, "%d ", &pixel);
     
-                image->matrice_black[i][j] = pixel;
+                image->matrice[i][j] = pixel;
                 
             }
         }
@@ -192,7 +192,7 @@ static PNM *fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image)
                 fscanf(fic, "%d ", &pixel);
               
             
-                image->matrice_black[i][j] = pixel;
+                image->matrice[i][j] = pixel;
               
             }
         }
@@ -202,9 +202,9 @@ static PNM *fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image)
             for(int j =0; j<columns*3 ; j+=3){
                
                 fscanf(fic, "%d %d %d ", &red, &green, &blue);
-                image->matrice_rgb[i][j] = red;
-                image->matrice_rgb[i][j+1] = green;
-                image->matrice_rgb[i][j+2] = blue;
+                image->matrice[i][j] = red;
+                image->matrice[i][j+1] = green;
+                image->matrice[i][j+2] = blue;
                 
               
             }
@@ -219,11 +219,23 @@ static PNM *fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image)
 int load_pnm(PNM **image, char* filename) {
     assert(filename != NULL && image != NULL);
     //printf("Filename : %s", filename);
+    int choice;
     FILE *fic = fopen(filename, "r");
     if (fic == NULL){
+        printf("Unable to access the chosen input file, the name may be wrong, do you want to try again ?\n");
+        printf("to change input file, press 1. press anything else to terminate the program\n");
+        scanf("Your choice : %d", &choice);
+        if(choice == 1){
+            printf("enter you input file's name\n");
+            scanf("%s", filename);
+            load_pnm(&image, filename);
+        }else{
         fclose(fic);
         printf("erreur à l'ouverture du fic");
         return -2;
+        }
+
+        
     }
     
 
@@ -243,7 +255,7 @@ int load_pnm(PNM **image, char* filename) {
         sscanf(buffer, "%d %d", &lines, &columns);
         
         if(lines >0 && columns >0){
-        *image = build_PNM(type, lines, columns, fic);
+        *image = build_PNM(type, lines, columns, 0);
         fill_matrix(type, lines, columns, fic, *image);
         
     
@@ -297,7 +309,7 @@ int write_pnm(PNM *image, char* filename) {
        fprintf(fic, "P1\n%d %d\n", image->lines, image->columns);
        for(int i = 0; i< image->lines; i++){
            for(int j =0; j<image->columns; j++){
-               fprintf(fic, "%d ", image->matrice_black[i][j]);
+               fprintf(fic, "%d ", image->matrice[i][j]);
            }
            fprintf(fic, "\n");
 
@@ -309,7 +321,7 @@ int write_pnm(PNM *image, char* filename) {
        fprintf(fic, "P2\n%d %d\n%d\n", image->lines, image->columns, image->max_value);
        for(int i = 0; i< image->lines; i++){
            for(int j =0; j<image->columns; j++){
-               fprintf(fic, "%d ", image->matrice_black[i][j]);
+               fprintf(fic, "%d ", image->matrice[i][j]);
            }
            fprintf(fic, "\n");
        }
@@ -321,7 +333,7 @@ int write_pnm(PNM *image, char* filename) {
         fprintf(fic, "P3\n %d %d\n%d\n", image->lines, image->columns, image->max_value);
         for(int i = 0; i< image->lines; i++){
             for(int j =0; j<image->columns * 3; j+=3){
-                fprintf(fic, "%d %d %d ", image->matrice_rgb[i][j], image->matrice_rgb[i][j+1], image->matrice_rgb[i][j+2]);
+                fprintf(fic, "%d %d %d ", image->matrice[i][j], image->matrice[i][j+1], image->matrice[i][j+2]);
             }
            fprintf(fic, "\n");
         }
@@ -345,27 +357,27 @@ void destroy_pnm(PNM *image){
         case 1:
 
             for(int i =0; i<image->lines; i++){
-                free(image->matrice_black[i]);
+                free(image->matrice[i]);
             }
-            free(image->matrice_black);
+            free(image->matrice);
             free(image);
 
             break;
         case 2:
             
             for(int i =0; i<image->lines; i++){
-                free(image->matrice_black[i]);
+                free(image->matrice[i]);
             }
-            free(image->matrice_black);
+            free(image->matrice);
             free(image);
 
             break;
         case 3:
 
             for(int i = 0; i<image->lines; i++){
-                free(image->matrice_rgb[i]);
+                free(image->matrice[i]);
             }
-            free(image->matrice_rgb);
+            free(image->matrice);
             free(image);
 
             break;
@@ -380,21 +392,6 @@ void destroy_pnm(PNM *image){
 void check_extension(char *input_file, char *output_file, char *format_file, PNM *image){
     char input_extension[5] = "";
     char output_extension[5] = "";
-
-    // if(check_filename(output_file) != 1){
-    //     printf("Output file contains a forbidden character do you want to type it again ?\n");
-    //     printf("Type 1 for yes and Anything else to terminate the program\n");
-    //     int choiceo;
-    //     scanf("%d", &choiceo);
-    //     if(choiceo == 1){
-    //         printf("type your new output file name\n");
-    //         scanf("%s", output_file);
-    //         check_extension(input_file, output_file, format_file, image);
-    //     }else{
-    //         printf("Goodbye");
-    //         return;
-    //     }
-    // }
 
    for(int i = 3; i>0; i--){
       strncat(input_extension, &input_file[strlen(input_file)-i], 1);
@@ -447,7 +444,7 @@ void check_extension(char *input_file, char *output_file, char *format_file, PNM
 
 
 int check_filename(char *filename){
-    for(int i =0; i<strlen(filename-1); i++){
+    for(int i =0; i<strlen(filename)-1; i++){
         
        if(strncmp(filename[i], "/", 1) != 0 && strncmp(filename[i], "\\", 1) != 0 && strncmp(filename[i], ":", 1) != 0 && strncmp(filename[i], "*", 1) != 0 &&
        strncmp(filename[i], "?", 1) != 0 && strncmp(filename[i], """", 1) != 0 && strncmp(filename[i], "<", 1) != 0 && strncmp(filename[i], ">", 1) != 0 &&

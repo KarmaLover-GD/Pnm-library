@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
 
    int value;
 
-   PNM *image;
+   
 
    while((value=getopt(argc, argv, optstring)) != EOF){
     switch(value) {
@@ -47,6 +47,7 @@ int main(int argc, char *argv[]) {
             break;
     }// fin switch
    }
+   PNM *image;
    
 
   check_extension(input_file, output_file, format_file, image);
