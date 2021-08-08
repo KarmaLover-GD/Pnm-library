@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.17"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Five or More:  Fichier source de vue_five.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Five or More
+   &#160;<span id="projectnumber">V1.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.17 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">vue_five.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="vue__five_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef __VUE_FIVE__</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define __VUE_FIVE__</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;gtk/gtk.h&gt;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="modele__five_8h.html">modele_five.h</a>&quot;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="structvue__t.html">   23</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structvue__t.html">vue_t</a>{</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="structvue__t.html#abee20d64e602804c9031a1a22b8a4fac">   25</a></span>&#160;   <a class="code" href="structmodele__t.html">ModeleFive</a> *<a class="code" href="structvue__t.html#abee20d64e602804c9031a1a22b8a4fac">mf</a>; </div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="structvue__t.html#a6032a6cc5cabbeefce0e64ff895ce5b6">   26</a></span>&#160;   GtkWidget **<a class="code" href="structvue__t.html#a6032a6cc5cabbeefce0e64ff895ce5b6">image</a>; </div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="structvue__t.html#a7f5b04582e0c0a7ee977448c9bfab8c2">   27</a></span>&#160;   GtkWidget **<a class="code" href="structvue__t.html#a7f5b04582e0c0a7ee977448c9bfab8c2">image_aleatoire</a>; </div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="structvue__t.html#aaa6fa46cbbe3b4873aaeb00fe520a0eb">   28</a></span>&#160;   GtkWidget **<a class="code" href="structvue__t.html#aaa6fa46cbbe3b4873aaeb00fe520a0eb">bouton_aleatoire</a>; </div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="structvue__t.html#af48a928aff77ae9367570f1e0e2b144d">   29</a></span>&#160;   GtkWidget *<a class="code" href="structvue__t.html#af48a928aff77ae9367570f1e0e2b144d">Score</a>; </div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="structvue__t.html#ad9030114424a01848de886f5059fb729">   30</a></span>&#160;   <span class="keywordtype">int</span> *<a class="code" href="structvue__t.html#ad9030114424a01848de886f5059fb729">couleur_actuelle</a>; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;}<a class="code" href="vue__five_8h.html#a3495dc71678faf293c89c083c11a449b">VueFive</a>;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<a class="code" href="structvue__t.html">VueFive</a> *<a class="code" href="vue__five_8h.html#a055e143f0e6fd66cca27b43f659f41d1">creer_vue_five</a>(<a class="code" href="structmodele__t.html">ModeleFive</a> *mf);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keywordtype">void</span> charge_images_aleatoires( <a class="code" href="structvue__t.html">VueFive</a> *vf);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="keywordtype">void</span> <a class="code" href="vue__five_8h.html#ad82642532f245165c3bdb0ac4e7b976a">charge_1couleur</a>(<a class="code" href="structvue__t.html">VueFive</a> *vf , <span class="keywordtype">int</span> position_une_des_images_aleatoires, <span class="keywordtype">int</span> position);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="keywordtype">void</span> <a class="code" href="vue__five_8h.html#a18f6cdc41bc47660f6fb20cf85f8409a">compteur_case_libre_ajoute_images_aleatoire</a>(<a class="code" href="structvue__t.html">VueFive</a> *vf);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="keywordtype">void</span> redessiner(<a class="code" href="structvue__t.html">VueFive</a> *vf);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="keywordtype">char</span> *<a class="code" href="vue__five_8h.html#ad2ba1b189c38f8736f1c1d9518d9c3ff">int_vers_char</a>(<span class="keywordtype">int</span> d);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="keywordtype">int</span> <a class="code" href="vue__five_8h.html#ab902f592dce0eb258b3b9d7917212298">charge_1couleur_deplacement</a>(<a class="code" href="structvue__t.html">VueFive</a> *vf, <span class="keywordtype">int</span> y_init, <span class="keywordtype">int</span> x_init, <span class="keywordtype">int</span> y_dest, <span class="keywordtype">int</span> x_dest);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="preprocessor">#endif</span></div>
+</div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="avue__five_8h_html_a3495dc71678faf293c89c083c11a449b"><div class="ttname"><a href="vue__five_8h.html#a3495dc71678faf293c89c083c11a449b">VueFive</a></div><div class="ttdeci">struct vue_t VueFive</div><div class="ttdoc">Implémentation de la vue pour le jeu five.</div></div>
+<div class="ttc" id="astructvue__t_html_ad9030114424a01848de886f5059fb729"><div class="ttname"><a href="structvue__t.html#ad9030114424a01848de886f5059fb729">vue_t::couleur_actuelle</a></div><div class="ttdeci">int * couleur_actuelle</div><div class="ttdef"><b>Definition:</b> vue_five.h:30</div></div>
+<div class="ttc" id="amodele__five_8h_html"><div class="ttname"><a href="modele__five_8h.html">modele_five.h</a></div><div class="ttdoc">Modèle (pattern MVC) pour la gestion d'un Five or More.</div></div>
+<div class="ttc" id="avue__five_8h_html_a055e143f0e6fd66cca27b43f659f41d1"><div class="ttname"><a href="vue__five_8h.html#a055e143f0e6fd66cca27b43f659f41d1">creer_vue_five</a></div><div class="ttdeci">VueFive * creer_vue_five(ModeleFive *mf)</div><div class="ttdoc">Crée une vue pour le five en fonction d'un certain modèle.</div><div class="ttdef"><b>Definition:</b> vue_five.c:9</div></div>
+<div class="ttc" id="astructvue__t_html_aaa6fa46cbbe3b4873aaeb00fe520a0eb"><div class="ttname"><a href="structvue__t.html#aaa6fa46cbbe3b4873aaeb00fe520a0eb">vue_t::bouton_aleatoire</a></div><div class="ttdeci">GtkWidget ** bouton_aleatoire</div><div class="ttdef"><b>Definition:</b> vue_five.h:28</div></div>
+<div class="ttc" id="avue__five_8h_html_ab902f592dce0eb258b3b9d7917212298"><div class="ttname"><a href="vue__five_8h.html#ab902f592dce0eb258b3b9d7917212298">charge_1couleur_deplacement</a></div><div class="ttdeci">int charge_1couleur_deplacement(VueFive *vf, int y_init, int x_init, int y_dest, int x_dest)</div><div class="ttdef"><b>Definition:</b> vue_five.c:37</div></div>
+<div class="ttc" id="avue__five_8h_html_ad82642532f245165c3bdb0ac4e7b976a"><div class="ttname"><a href="vue__five_8h.html#ad82642532f245165c3bdb0ac4e7b976a">charge_1couleur</a></div><div class="ttdeci">void charge_1couleur(VueFive *vf, int position_une_des_images_aleatoires, int position)</div><div class="ttdef"><b>Definition:</b> vue_five.c:125</div></div>
+<div class="ttc" id="avue__five_8h_html_ad2ba1b189c38f8736f1c1d9518d9c3ff"><div class="ttname"><a href="vue__five_8h.html#ad2ba1b189c38f8736f1c1d9518d9c3ff">int_vers_char</a></div><div class="ttdeci">char * int_vers_char(int d)</div><div class="ttdoc">Transforme un int en chaîne de caractères.</div><div class="ttdef"><b>Definition:</b> vue_five.c:248</div></div>
+<div class="ttc" id="astructmodele__t_html"><div class="ttname"><a href="structmodele__t.html">modele_t</a></div><div class="ttdoc">Implémentation du modèle pour le five.</div><div class="ttdef"><b>Definition:</b> modele_five.h:22</div></div>
+<div class="ttc" id="astructvue__t_html_af48a928aff77ae9367570f1e0e2b144d"><div class="ttname"><a href="structvue__t.html#af48a928aff77ae9367570f1e0e2b144d">vue_t::Score</a></div><div class="ttdeci">GtkWidget * Score</div><div class="ttdef"><b>Definition:</b> vue_five.h:29</div></div>
+<div class="ttc" id="avue__five_8h_html_a18f6cdc41bc47660f6fb20cf85f8409a"><div class="ttname"><a href="vue__five_8h.html#a18f6cdc41bc47660f6fb20cf85f8409a">compteur_case_libre_ajoute_images_aleatoire</a></div><div class="ttdeci">void compteur_case_libre_ajoute_images_aleatoire(VueFive *vf)</div><div class="ttdef"><b>Definition:</b> vue_five.c:163</div></div>
+<div class="ttc" id="astructvue__t_html"><div class="ttname"><a href="structvue__t.html">vue_t</a></div><div class="ttdoc">Implémentation de la vue pour le jeu five.</div><div class="ttdef"><b>Definition:</b> vue_five.h:23</div></div>
+<div class="ttc" id="astructvue__t_html_a7f5b04582e0c0a7ee977448c9bfab8c2"><div class="ttname"><a href="structvue__t.html#a7f5b04582e0c0a7ee977448c9bfab8c2">vue_t::image_aleatoire</a></div><div class="ttdeci">GtkWidget ** image_aleatoire</div><div class="ttdef"><b>Definition:</b> vue_five.h:27</div></div>
+<div class="ttc" id="astructvue__t_html_a6032a6cc5cabbeefce0e64ff895ce5b6"><div class="ttname"><a href="structvue__t.html#a6032a6cc5cabbeefce0e64ff895ce5b6">vue_t::image</a></div><div class="ttdeci">GtkWidget ** image</div><div class="ttdef"><b>Definition:</b> vue_five.h:26</div></div>
+<div class="ttc" id="astructvue__t_html_abee20d64e602804c9031a1a22b8a4fac"><div class="ttname"><a href="structvue__t.html#abee20d64e602804c9031a1a22b8a4fac">vue_t::mf</a></div><div class="ttdeci">ModeleFive * mf</div><div class="ttdef"><b>Definition:</b> vue_five.h:25</div></div>
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.17
+</small></address>
+</body>
+</html>

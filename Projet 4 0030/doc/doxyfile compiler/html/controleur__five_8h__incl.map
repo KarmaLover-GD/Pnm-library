@@ -1,0 +1,7 @@
+<map id="controleur_five.h" name="controleur_five.h">
+<area shape="rect" id="node1" title="Contrôleur (pattern MVC) pour la gestion d&#39;un five." alt="" coords="44,5,175,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="14,155,94,181"/>
+<area shape="rect" id="node3" title=" " alt="" coords="22,80,93,107"/>
+<area shape="rect" id="node4" href="$modele__five_8h.html" title="Modèle (pattern MVC) pour la gestion d&#39;un Five or More." alt="" coords="146,155,260,181"/>
+<area shape="rect" id="node5" href="$vue__five_8h.html" title="Vue (pattern MVC) pour la gestion du jeu five." alt="" coords="117,80,206,107"/>
+</map>

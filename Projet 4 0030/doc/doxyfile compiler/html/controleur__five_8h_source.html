@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.17"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Five or More:  Fichier source de controleur_five.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Five or More
+   &#160;<span id="projectnumber">V1.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.17 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">controleur_five.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="controleur__five_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef __CONTROLEUR_FIVE__</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define __CONTROLEUR_FIVE__</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;gtk/gtk.h&gt;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="modele__five_8h.html">modele_five.h</a>&quot;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="vue__five_8h.html">vue_five.h</a>&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#define LONGUEUR_FENETRE_AUTRES 300</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#define LARGEUR_FENETRE_AUTRES 100</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#define LONGUEUR_FENETRE 500</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#define LARGEUR_FENETRE 500</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#define SCORE_COMBO_5 10</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#define SCORE_COMBO_6 12</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#define SCORE_COMBO_7 18</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#define SCORE_COMBO_8 28</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#define SCORE_COMBO_9 42</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#define SCORE_COMBO_10 82</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#define SCORE_COMBO_11 108</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#define SCORE_COMBO_12 138</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#define SCORE_COMBO_13 172</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#define SCORE_COMBO_14 210</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="structcontroleur__t.html">   45</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structcontroleur__t.html">controleur_t</a>{</div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="structcontroleur__t.html#ad7d15ba7207c72f8dad28752fd82e5e1">   46</a></span>&#160;    <a class="code" href="structvue__t.html">VueFive</a> *<a class="code" href="structcontroleur__t.html#ad7d15ba7207c72f8dad28752fd82e5e1">vf</a>; </div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="structcontroleur__t.html#abee20d64e602804c9031a1a22b8a4fac">   47</a></span>&#160;    <a class="code" href="structmodele__t.html">ModeleFive</a> *<a class="code" href="structcontroleur__t.html#abee20d64e602804c9031a1a22b8a4fac">mf</a>; </div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="structcontroleur__t.html#aa9e056127d762e0c13c83c911e0d5ee2">   48</a></span>&#160;    GtkWidget **<a class="code" href="structcontroleur__t.html#aa9e056127d762e0c13c83c911e0d5ee2">bouton</a>; </div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="structcontroleur__t.html#abeab1068f52b3460382e6399d60a29c7">   49</a></span>&#160;    GtkWidget *<a class="code" href="structcontroleur__t.html#abeab1068f52b3460382e6399d60a29c7">Fenetre</a>;  </div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="structcontroleur__t.html#aa36a552eef604986b8cd8a467c56a2fd">   50</a></span>&#160;    <span class="keywordtype">char</span> *<a class="code" href="structcontroleur__t.html#aa36a552eef604986b8cd8a467c56a2fd">fichier_score</a>; </div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="structcontroleur__t.html#aacbf3787b6c3ec89b6fe7053892a6249">   51</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structcontroleur__t.html#aacbf3787b6c3ec89b6fe7053892a6249">nombre</a>; </div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="structcontroleur__t.html#ab9a542c55fbaaf24fbbf1ba66b5f61bc">   52</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structcontroleur__t.html#ab9a542c55fbaaf24fbbf1ba66b5f61bc">x_init</a>; </div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="structcontroleur__t.html#a89cb9e78284a8e10f0515c9031fd99d1">   53</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structcontroleur__t.html#a89cb9e78284a8e10f0515c9031fd99d1">y_init</a>; </div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="structcontroleur__t.html#a95f3afc0266ab5e947008bc5a7b383e5">   54</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structcontroleur__t.html#a95f3afc0266ab5e947008bc5a7b383e5">x_dest</a>; </div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="structcontroleur__t.html#a4efbbe5a67c77a3a041cdd9ed90e89e9">   55</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structcontroleur__t.html#a4efbbe5a67c77a3a041cdd9ed90e89e9">y_dest</a>; </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;}<a class="code" href="controleur__five_8h.html#a0eeb23004b143b993892df5d9667c5ff">ControleurFive</a>;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<a class="code" href="structcontroleur__t.html">ControleurFive</a> *<a class="code" href="controleur__five_8h.html#a319dba03556a87fbadeb48eea61e6ed0">creer_controleur_five</a>(<a class="code" href="structvue__t.html">VueFive</a> *vf, <a class="code" href="structmodele__t.html">ModeleFive</a> *mf);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="keywordtype">void</span> <a class="code" href="controleur__five_8h.html#a06ff1e85a6538e149f2d7b770309ebd9">ajoute_images</a>( <a class="code" href="structcontroleur__t.html">ControleurFive</a> *cf);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keywordtype">void</span> <a class="code" href="controleur__five_8h.html#a950e3c68b1a8d446361fb6b130e7a2c9">click_init</a>(GtkWidget *<a class="code" href="controleur__five_8h.html#a950e3c68b1a8d446361fb6b130e7a2c9">click_init</a>, gpointer data);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="keywordtype">void</span> <a class="code" href="controleur__five_8h.html#ae26cd09bd312cfb34e1c69208a7c474b">position_dest_et_jeu_principale</a>(GtkWidget *click_dest, gpointer data);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="keywordtype">int</span> <a class="code" href="controleur__five_8h.html#af912cb0bb700029c1ce02ccf43b7f352">deplacement</a>(<a class="code" href="structcontroleur__t.html">ControleurFive</a> *cf);</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;GtkWidget *<a class="code" href="controleur__five_8h.html#a32feae20052980312c4f6cb3f9861e7d">click_creer_menu</a>(GtkWidget *Fenetre_Principale,<a class="code" href="structcontroleur__t.html">ControleurFive</a> *cf);</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="keywordtype">void</span> <a class="code" href="controleur__five_8h.html#ac2c2ca54fe82bc82893d26b6f6e17050">nouvelle_fenetre_niveau</a>(<span class="keywordtype">int</span> nouveau_niveau, GtkWidget *Nouvelle_Fenetre_Niveau, <a class="code" href="structcontroleur__t.html">ControleurFive</a> *cf);</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160; </div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<span class="keywordtype">void</span> <a class="code" href="controleur__five_8h.html#a3b12748b7e00e233be955b82abaee0fc">aide</a>(GtkWidget *Fenetre_Aide);</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160; </div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;<span class="keywordtype">void</span> <a class="code" href="controleur__five_8h.html#a7afe32817f29fead640d9191f2588a7f">nouvelle_partie</a>(GtkWidget *bouton, gpointer data);</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160; </div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="keywordtype">void</span> <a class="code" href="controleur__five_8h.html#a9a83a91f690d58f5da55bf294df0ce38">liste_score</a>(GtkWidget *Fenetre_Score, gpointer data);</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160; </div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="keywordtype">void</span> <a class="code" href="controleur__five_8h.html#a64d25b0a896dafd0fbabb4c29fb85529">facile</a>(GtkWidget *Nouvelle_Fenetre_Niveau, gpointer data);</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160; </div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;<span class="keywordtype">void</span> <a class="code" href="controleur__five_8h.html#ab4cfd67cc42adc643f1b53594b17d85d">moyen</a>(GtkWidget *Nouvelle_Fenetre_Niveau, gpointer data);</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160; </div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="keywordtype">void</span> <a class="code" href="controleur__five_8h.html#adec0821fad3f345a872b361e08888cc2">difficile</a>(GtkWidget *Nouvelle_Fenetre_Niveau, gpointer data);</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160; </div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;<span class="keywordtype">int</span> <a class="code" href="controleur__five_8h.html#aded5879d0e49db38df32e55af3266451">verification_horizontale</a>(<a class="code" href="structcontroleur__t.html">ControleurFive</a> *cf);</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160; </div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;<span class="keywordtype">int</span> <a class="code" href="controleur__five_8h.html#a548063c0478940027389089836ee8c13">verification_verticale</a>(<a class="code" href="structcontroleur__t.html">ControleurFive</a> *cf);</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160; </div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;<span class="keywordtype">int</span> <a class="code" href="controleur__five_8h.html#aff4f15d3b409d05346a1f9d57ea0fb47">oblique_croissant1</a>(<a class="code" href="structcontroleur__t.html">ControleurFive</a> *cf);</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160; </div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;<span class="keywordtype">int</span> <a class="code" href="controleur__five_8h.html#aeb9f4166b9c6bc2532176abb1e34e9b6">oblique_croissant2</a>(<a class="code" href="structcontroleur__t.html">ControleurFive</a> *cf);</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160; </div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;<span class="keywordtype">int</span> <a class="code" href="controleur__five_8h.html#a11d67d98d85ad0ca4127a2d63dd75953">oblique_decroissant1</a>(<a class="code" href="structcontroleur__t.html">ControleurFive</a> *cf);</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160; </div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;<span class="keywordtype">int</span> <a class="code" href="controleur__five_8h.html#a8f8af3d0d2785c0f78e8d453b83db6bf">oblique_decroissant2</a>(<a class="code" href="structcontroleur__t.html">ControleurFive</a> *cf);</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160; </div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;<span class="keywordtype">void</span> <a class="code" href="controleur__five_8h.html#a1f5d7e2cff196d6ab8f4a97694a453cb">charge_modifie_combo_decroissant2</a>(<a class="code" href="structcontroleur__t.html">ControleurFive</a> *cf,<span class="keywordtype">int</span> ComboAll, <span class="keywordtype">int</span> k, <span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j);</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160; </div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;<span class="keywordtype">void</span> <a class="code" href="controleur__five_8h.html#afd00aea5e3c342d3f5cd472cb3af6855">charge_modifie_combo_decroissant1</a>(<a class="code" href="structcontroleur__t.html">ControleurFive</a> *cf,<span class="keywordtype">int</span> ComboAll, <span class="keywordtype">int</span> k, <span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j);</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160; </div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;<span class="keywordtype">void</span> <a class="code" href="controleur__five_8h.html#ac9fa6cf18b244dda794e435a5245f11d">charge_modifie_combo_croissant2</a>(<a class="code" href="structcontroleur__t.html">ControleurFive</a> *cf,<span class="keywordtype">int</span> ComboAll, <span class="keywordtype">int</span> k, <span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j);</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160; </div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;<span class="keywordtype">void</span> <a class="code" href="controleur__five_8h.html#a33315079dc90fecfc7b324f927edc9e4">charge_modifie_combo_croissant1</a>(<a class="code" href="structcontroleur__t.html">ControleurFive</a> *cf,<span class="keywordtype">int</span> ComboAll, <span class="keywordtype">int</span> k, <span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j);</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160; </div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;<span class="keywordtype">void</span> <a class="code" href="controleur__five_8h.html#abb63723b5afe3e95288739a1ce2e49f9">charge_modifie_combo_verticale</a>(<a class="code" href="structcontroleur__t.html">ControleurFive</a> *cf,<span class="keywordtype">int</span> ComboAll, <span class="keywordtype">int</span> k, <span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j);</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160; </div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;<span class="keywordtype">void</span> <a class="code" href="controleur__five_8h.html#a8d822d2eba43c70d9adeb1bb900426f1">charge_modifie_combo_horizontale</a>(<a class="code" href="structcontroleur__t.html">ControleurFive</a> *cf,<span class="keywordtype">int</span> ComboAll, <span class="keywordtype">int</span> k, <span class="keywordtype">int</span> i, <span class="keywordtype">int</span> j);</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160; </div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;<span class="keywordtype">char</span> *<a class="code" href="controleur__five_8h.html#abb454ab81ddf659a04469bb88928f0b5">affiche_classement_score</a>(<a class="code" href="structcontroleur__t.html">ControleurFive</a> *cf);</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160; </div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;<span class="preprocessor">#endif</span></div>
+</div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="acontroleur__five_8h_html_ae26cd09bd312cfb34e1c69208a7c474b"><div class="ttname"><a href="controleur__five_8h.html#ae26cd09bd312cfb34e1c69208a7c474b">position_dest_et_jeu_principale</a></div><div class="ttdeci">void position_dest_et_jeu_principale(GtkWidget *click_dest, gpointer data)</div><div class="ttdef"><b>Definition:</b> controleur_five.c:55</div></div>
+<div class="ttc" id="acontroleur__five_8h_html_a33315079dc90fecfc7b324f927edc9e4"><div class="ttname"><a href="controleur__five_8h.html#a33315079dc90fecfc7b324f927edc9e4">charge_modifie_combo_croissant1</a></div><div class="ttdeci">void charge_modifie_combo_croissant1(ControleurFive *cf, int ComboAll, int k, int i, int j)</div><div class="ttdef"><b>Definition:</b> controleur_five.c:1056</div></div>
+<div class="ttc" id="acontroleur__five_8h_html_a9a83a91f690d58f5da55bf294df0ce38"><div class="ttname"><a href="controleur__five_8h.html#a9a83a91f690d58f5da55bf294df0ce38">liste_score</a></div><div class="ttdeci">void liste_score(GtkWidget *Fenetre_Score, gpointer data)</div><div class="ttdef"><b>Definition:</b> controleur_five.c:225</div></div>
+<div class="ttc" id="acontroleur__five_8h_html_a06ff1e85a6538e149f2d7b770309ebd9"><div class="ttname"><a href="controleur__five_8h.html#a06ff1e85a6538e149f2d7b770309ebd9">ajoute_images</a></div><div class="ttdeci">void ajoute_images(ControleurFive *cf)</div><div class="ttdef"><b>Definition:</b> controleur_five.c:286</div></div>
+<div class="ttc" id="avue__five_8h_html"><div class="ttname"><a href="vue__five_8h.html">vue_five.h</a></div><div class="ttdoc">Vue (pattern MVC) pour la gestion du jeu five.</div></div>
+<div class="ttc" id="acontroleur__five_8h_html_afd00aea5e3c342d3f5cd472cb3af6855"><div class="ttname"><a href="controleur__five_8h.html#afd00aea5e3c342d3f5cd472cb3af6855">charge_modifie_combo_decroissant1</a></div><div class="ttdeci">void charge_modifie_combo_decroissant1(ControleurFive *cf, int ComboAll, int k, int i, int j)</div><div class="ttdef"><b>Definition:</b> controleur_five.c:1034</div></div>
+<div class="ttc" id="acontroleur__five_8h_html_a0eeb23004b143b993892df5d9667c5ff"><div class="ttname"><a href="controleur__five_8h.html#a0eeb23004b143b993892df5d9667c5ff">ControleurFive</a></div><div class="ttdeci">struct controleur_t ControleurFive</div><div class="ttdoc">Implémentation du contrôleur pour five.</div></div>
+<div class="ttc" id="amodele__five_8h_html"><div class="ttname"><a href="modele__five_8h.html">modele_five.h</a></div><div class="ttdoc">Modèle (pattern MVC) pour la gestion d'un Five or More.</div></div>
+<div class="ttc" id="acontroleur__five_8h_html_aeb9f4166b9c6bc2532176abb1e34e9b6"><div class="ttname"><a href="controleur__five_8h.html#aeb9f4166b9c6bc2532176abb1e34e9b6">oblique_croissant2</a></div><div class="ttdeci">int oblique_croissant2(ControleurFive *cf)</div><div class="ttdef"><b>Definition:</b> controleur_five.c:702</div></div>
+<div class="ttc" id="astructcontroleur__t_html_aa36a552eef604986b8cd8a467c56a2fd"><div class="ttname"><a href="structcontroleur__t.html#aa36a552eef604986b8cd8a467c56a2fd">controleur_t::fichier_score</a></div><div class="ttdeci">char * fichier_score</div><div class="ttdef"><b>Definition:</b> controleur_five.h:50</div></div>
+<div class="ttc" id="acontroleur__five_8h_html_abb63723b5afe3e95288739a1ce2e49f9"><div class="ttname"><a href="controleur__five_8h.html#abb63723b5afe3e95288739a1ce2e49f9">charge_modifie_combo_verticale</a></div><div class="ttdeci">void charge_modifie_combo_verticale(ControleurFive *cf, int ComboAll, int k, int i, int j)</div><div class="ttdef"><b>Definition:</b> controleur_five.c:1068</div></div>
+<div class="ttc" id="astructcontroleur__t_html_a4efbbe5a67c77a3a041cdd9ed90e89e9"><div class="ttname"><a href="structcontroleur__t.html#a4efbbe5a67c77a3a041cdd9ed90e89e9">controleur_t::y_dest</a></div><div class="ttdeci">int y_dest</div><div class="ttdef"><b>Definition:</b> controleur_five.h:55</div></div>
+<div class="ttc" id="astructcontroleur__t_html_abeab1068f52b3460382e6399d60a29c7"><div class="ttname"><a href="structcontroleur__t.html#abeab1068f52b3460382e6399d60a29c7">controleur_t::Fenetre</a></div><div class="ttdeci">GtkWidget * Fenetre</div><div class="ttdef"><b>Definition:</b> controleur_five.h:49</div></div>
+<div class="ttc" id="acontroleur__five_8h_html_ac2c2ca54fe82bc82893d26b6f6e17050"><div class="ttname"><a href="controleur__five_8h.html#ac2c2ca54fe82bc82893d26b6f6e17050">nouvelle_fenetre_niveau</a></div><div class="ttdeci">void nouvelle_fenetre_niveau(int nouveau_niveau, GtkWidget *Nouvelle_Fenetre_Niveau, ControleurFive *cf)</div><div class="ttdef"><b>Definition:</b> controleur_five.c:312</div></div>
+<div class="ttc" id="astructcontroleur__t_html_aacbf3787b6c3ec89b6fe7053892a6249"><div class="ttname"><a href="structcontroleur__t.html#aacbf3787b6c3ec89b6fe7053892a6249">controleur_t::nombre</a></div><div class="ttdeci">int nombre</div><div class="ttdef"><b>Definition:</b> controleur_five.h:51</div></div>
+<div class="ttc" id="acontroleur__five_8h_html_a1f5d7e2cff196d6ab8f4a97694a453cb"><div class="ttname"><a href="controleur__five_8h.html#a1f5d7e2cff196d6ab8f4a97694a453cb">charge_modifie_combo_decroissant2</a></div><div class="ttdeci">void charge_modifie_combo_decroissant2(ControleurFive *cf, int ComboAll, int k, int i, int j)</div><div class="ttdef"><b>Definition:</b> controleur_five.c:1023</div></div>
+<div class="ttc" id="astructcontroleur__t_html_ab9a542c55fbaaf24fbbf1ba66b5f61bc"><div class="ttname"><a href="structcontroleur__t.html#ab9a542c55fbaaf24fbbf1ba66b5f61bc">controleur_t::x_init</a></div><div class="ttdeci">int x_init</div><div class="ttdef"><b>Definition:</b> controleur_five.h:52</div></div>
+<div class="ttc" id="acontroleur__five_8h_html_aded5879d0e49db38df32e55af3266451"><div class="ttname"><a href="controleur__five_8h.html#aded5879d0e49db38df32e55af3266451">verification_horizontale</a></div><div class="ttdeci">int verification_horizontale(ControleurFive *cf)</div><div class="ttdef"><b>Definition:</b> controleur_five.c:378</div></div>
+<div class="ttc" id="astructcontroleur__t_html_aa9e056127d762e0c13c83c911e0d5ee2"><div class="ttname"><a href="structcontroleur__t.html#aa9e056127d762e0c13c83c911e0d5ee2">controleur_t::bouton</a></div><div class="ttdeci">GtkWidget ** bouton</div><div class="ttdef"><b>Definition:</b> controleur_five.h:48</div></div>
+<div class="ttc" id="acontroleur__five_8h_html_a3b12748b7e00e233be955b82abaee0fc"><div class="ttname"><a href="controleur__five_8h.html#a3b12748b7e00e233be955b82abaee0fc">aide</a></div><div class="ttdeci">void aide(GtkWidget *Fenetre_Aide)</div><div class="ttdef"><b>Definition:</b> controleur_five.c:244</div></div>
+<div class="ttc" id="acontroleur__five_8h_html_a319dba03556a87fbadeb48eea61e6ed0"><div class="ttname"><a href="controleur__five_8h.html#a319dba03556a87fbadeb48eea61e6ed0">creer_controleur_five</a></div><div class="ttdeci">ControleurFive * creer_controleur_five(VueFive *vf, ModeleFive *mf)</div><div class="ttdoc">Implémentation de la structure gerant les boutons.</div><div class="ttdef"><b>Definition:</b> controleur_five.c:6</div></div>
+<div class="ttc" id="astructcontroleur__t_html_abee20d64e602804c9031a1a22b8a4fac"><div class="ttname"><a href="structcontroleur__t.html#abee20d64e602804c9031a1a22b8a4fac">controleur_t::mf</a></div><div class="ttdeci">ModeleFive * mf</div><div class="ttdef"><b>Definition:</b> controleur_five.h:47</div></div>
+<div class="ttc" id="acontroleur__five_8h_html_a64d25b0a896dafd0fbabb4c29fb85529"><div class="ttname"><a href="controleur__five_8h.html#a64d25b0a896dafd0fbabb4c29fb85529">facile</a></div><div class="ttdeci">void facile(GtkWidget *Nouvelle_Fenetre_Niveau, gpointer data)</div><div class="ttdef"><b>Definition:</b> controleur_five.c:204</div></div>
+<div class="ttc" id="acontroleur__five_8h_html_a548063c0478940027389089836ee8c13"><div class="ttname"><a href="controleur__five_8h.html#a548063c0478940027389089836ee8c13">verification_verticale</a></div><div class="ttdeci">int verification_verticale(ControleurFive *cf)</div><div class="ttdef"><b>Definition:</b> controleur_five.c:483</div></div>
+<div class="ttc" id="acontroleur__five_8h_html_a8d822d2eba43c70d9adeb1bb900426f1"><div class="ttname"><a href="controleur__five_8h.html#a8d822d2eba43c70d9adeb1bb900426f1">charge_modifie_combo_horizontale</a></div><div class="ttdeci">void charge_modifie_combo_horizontale(ControleurFive *cf, int ComboAll, int k, int i, int j)</div><div class="ttdef"><b>Definition:</b> controleur_five.c:1080</div></div>
+<div class="ttc" id="acontroleur__five_8h_html_ac9fa6cf18b244dda794e435a5245f11d"><div class="ttname"><a href="controleur__five_8h.html#ac9fa6cf18b244dda794e435a5245f11d">charge_modifie_combo_croissant2</a></div><div class="ttdeci">void charge_modifie_combo_croissant2(ControleurFive *cf, int ComboAll, int k, int i, int j)</div><div class="ttdef"><b>Definition:</b> controleur_five.c:1045</div></div>
+<div class="ttc" id="acontroleur__five_8h_html_a950e3c68b1a8d446361fb6b130e7a2c9"><div class="ttname"><a href="controleur__five_8h.html#a950e3c68b1a8d446361fb6b130e7a2c9">click_init</a></div><div class="ttdeci">void click_init(GtkWidget *click_init, gpointer data)</div><div class="ttdef"><b>Definition:</b> controleur_five.c:35</div></div>
+<div class="ttc" id="astructmodele__t_html"><div class="ttname"><a href="structmodele__t.html">modele_t</a></div><div class="ttdoc">Implémentation du modèle pour le five.</div><div class="ttdef"><b>Definition:</b> modele_five.h:22</div></div>
+<div class="ttc" id="acontroleur__five_8h_html_abb454ab81ddf659a04469bb88928f0b5"><div class="ttname"><a href="controleur__five_8h.html#abb454ab81ddf659a04469bb88928f0b5">affiche_classement_score</a></div><div class="ttdeci">char * affiche_classement_score(ControleurFive *cf)</div><div class="ttdef"><b>Definition:</b> controleur_five.c:1355</div></div>
+<div class="ttc" id="acontroleur__five_8h_html_a32feae20052980312c4f6cb3f9861e7d"><div class="ttname"><a href="controleur__five_8h.html#a32feae20052980312c4f6cb3f9861e7d">click_creer_menu</a></div><div class="ttdeci">GtkWidget * click_creer_menu(GtkWidget *Fenetre_Principale, ControleurFive *cf)</div><div class="ttdef"><b>Definition:</b> controleur_five.c:106</div></div>
+<div class="ttc" id="acontroleur__five_8h_html_af912cb0bb700029c1ce02ccf43b7f352"><div class="ttname"><a href="controleur__five_8h.html#af912cb0bb700029c1ce02ccf43b7f352">deplacement</a></div><div class="ttdeci">int deplacement(ControleurFive *cf)</div><div class="ttdef"><b>Definition:</b> controleur_five.c:1090</div></div>
+<div class="ttc" id="astructcontroleur__t_html_a95f3afc0266ab5e947008bc5a7b383e5"><div class="ttname"><a href="structcontroleur__t.html#a95f3afc0266ab5e947008bc5a7b383e5">controleur_t::x_dest</a></div><div class="ttdeci">int x_dest</div><div class="ttdef"><b>Definition:</b> controleur_five.h:54</div></div>
+<div class="ttc" id="astructcontroleur__t_html"><div class="ttname"><a href="structcontroleur__t.html">controleur_t</a></div><div class="ttdoc">Implémentation du contrôleur pour five.</div><div class="ttdef"><b>Definition:</b> controleur_five.h:45</div></div>
+<div class="ttc" id="acontroleur__five_8h_html_a7afe32817f29fead640d9191f2588a7f"><div class="ttname"><a href="controleur__five_8h.html#a7afe32817f29fead640d9191f2588a7f">nouvelle_partie</a></div><div class="ttdeci">void nouvelle_partie(GtkWidget *bouton, gpointer data)</div><div class="ttdef"><b>Definition:</b> controleur_five.c:266</div></div>
+<div class="ttc" id="astructvue__t_html"><div class="ttname"><a href="structvue__t.html">vue_t</a></div><div class="ttdoc">Implémentation de la vue pour le jeu five.</div><div class="ttdef"><b>Definition:</b> vue_five.h:23</div></div>
+<div class="ttc" id="astructcontroleur__t_html_a89cb9e78284a8e10f0515c9031fd99d1"><div class="ttname"><a href="structcontroleur__t.html#a89cb9e78284a8e10f0515c9031fd99d1">controleur_t::y_init</a></div><div class="ttdeci">int y_init</div><div class="ttdef"><b>Definition:</b> controleur_five.h:53</div></div>
+<div class="ttc" id="acontroleur__five_8h_html_ab4cfd67cc42adc643f1b53594b17d85d"><div class="ttname"><a href="controleur__five_8h.html#ab4cfd67cc42adc643f1b53594b17d85d">moyen</a></div><div class="ttdeci">void moyen(GtkWidget *Nouvelle_Fenetre_Niveau, gpointer data)</div><div class="ttdef"><b>Definition:</b> controleur_five.c:211</div></div>
+<div class="ttc" id="acontroleur__five_8h_html_adec0821fad3f345a872b361e08888cc2"><div class="ttname"><a href="controleur__five_8h.html#adec0821fad3f345a872b361e08888cc2">difficile</a></div><div class="ttdeci">void difficile(GtkWidget *Nouvelle_Fenetre_Niveau, gpointer data)</div><div class="ttdef"><b>Definition:</b> controleur_five.c:218</div></div>
+<div class="ttc" id="astructcontroleur__t_html_ad7d15ba7207c72f8dad28752fd82e5e1"><div class="ttname"><a href="structcontroleur__t.html#ad7d15ba7207c72f8dad28752fd82e5e1">controleur_t::vf</a></div><div class="ttdeci">VueFive * vf</div><div class="ttdef"><b>Definition:</b> controleur_five.h:46</div></div>
+<div class="ttc" id="acontroleur__five_8h_html_a8f8af3d0d2785c0f78e8d453b83db6bf"><div class="ttname"><a href="controleur__five_8h.html#a8f8af3d0d2785c0f78e8d453b83db6bf">oblique_decroissant2</a></div><div class="ttdeci">int oblique_decroissant2(ControleurFive *cf)</div><div class="ttdef"><b>Definition:</b> controleur_five.c:911</div></div>
+<div class="ttc" id="acontroleur__five_8h_html_a11d67d98d85ad0ca4127a2d63dd75953"><div class="ttname"><a href="controleur__five_8h.html#a11d67d98d85ad0ca4127a2d63dd75953">oblique_decroissant1</a></div><div class="ttdeci">int oblique_decroissant1(ControleurFive *cf)</div><div class="ttdef"><b>Definition:</b> controleur_five.c:809</div></div>
+<div class="ttc" id="acontroleur__five_8h_html_aff4f15d3b409d05346a1f9d57ea0fb47"><div class="ttname"><a href="controleur__five_8h.html#aff4f15d3b409d05346a1f9d57ea0fb47">oblique_croissant1</a></div><div class="ttdeci">int oblique_croissant1(ControleurFive *cf)</div><div class="ttdef"><b>Definition:</b> controleur_five.c:589</div></div>
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.17
+</small></address>
+</body>
+</html>
