@@ -40,7 +40,7 @@ int operation(LSFR *mylsfr){
 
     unsigned int lenght = get_lenght(mylsfr);
     unsigned int tap = get_tap(mylsfr);
-    char seed = get_seed(mylsfr);
+    char *seed = get_seed(mylsfr);
 
    
     int tap_number =  atoi(&seed[tap]);
