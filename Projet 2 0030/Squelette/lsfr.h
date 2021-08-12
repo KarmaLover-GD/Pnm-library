@@ -6,9 +6,9 @@ typedef struct LSFR_t LSFR;
 
 LSFR *initialisation(char *seed, unsigned int bits);
 
-int operation(LSFR *string);
+int operation(LSFR *mylsfr);
 
-char *transformation(LSFR *string);
+char *transformation(LSFR *mylsfr);
 // getters
 
 int get_lenght(LSFR *mylsfr);

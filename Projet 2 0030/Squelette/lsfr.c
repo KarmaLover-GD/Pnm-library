@@ -7,7 +7,7 @@
 
 struct LSFR_t{
     unsigned int lenght;
-    char *seed;
+    int *seed;
     unsigned int tap;
 };
 
@@ -25,7 +25,7 @@ LSFR *initialisation(char *seed, unsigned int tap){
         return 0;
     }
     // checking the seed content
-    for(int i= 0; i<seed_lenght; i++){
+    for(unsigned int i= 0; i<seed_lenght; i++){
         if(seed[i] != '0' && seed[i] != '1'){
             printf("unallowed caracters in the seed\n");
             return 0;
@@ -34,53 +34,88 @@ LSFR *initialisation(char *seed, unsigned int tap){
 
     // create our lsfr using our constructor
     LSFR *mylsfr = constructor();
-
+    mylsfr->seed = malloc(sizeof(int)*seed_lenght);
+    if(mylsfr->seed == NULL){
+        printf("couldn't allocate memory for the seed");
+        return NULL;
+    }
     // fill our LSFR structure using setters
     set_lenght(mylsfr, seed_lenght);
-    set_seed(mylsfr, seed);
     set_tap(mylsfr, tap);
+    set_seed(mylsfr, seed);
 
     return mylsfr;
 }
 
-static int *stringtoarray(char *string){
 
-}
 
 int operation(LSFR *mylsfr){
     assert( mylsfr != NULL);
 
-    unsigned int lenght = get_lenght(mylsfr);
-    unsigned int tap = get_tap(mylsfr);
-    char *seed = get_seed(mylsfr);
+    int new_lower_bit;
+  
+    new_lower_bit = mylsfr->seed[mylsfr->lenght-1-mylsfr->tap] ^ mylsfr->seed[1];
 
-   
-    int tap_number =  atoi(&seed[tap]);
-
-    unsigned int new_lower_bit;
-
-    new_lower_bit =  tap_number;
 
     return new_lower_bit;
 }
 
 char *transformation(LSFR *mylsfr){
     assert(mylsfr != NULL);
-    
+    int newseed[mylsfr->lenght];
+    int last_bit = operation(mylsfr);
+
+    for(unsigned int i = 0; i<mylsfr->lenght-1; i++){
+        newseed[i] = mylsfr->seed[i+1];
+    }
+    newseed[mylsfr->lenght-1] = last_bit;
+
+   for(unsigned int i = 0; i<mylsfr->lenght; i++){
+       mylsfr->seed[i] = newseed[i];
+   } 
+   char result[255];
+
+   strcpy(result, arraytostring(mylsfr->seed, mylsfr));
+
+   return result;
 }
 // initialisation of the constructor
 LSFR *constructor(){
     LSFR *mylsfr;
     mylsfr = malloc(sizeof(LSFR));
+    if(mylsfr == NULL){
+        printf("couldn't allocate memory for our lsfr\n");
+        return NULL;
+    }
     return mylsfr;
 }
 // initiallisation of the destructor 
  void destructor(LSFR *mylsfr){
+    free(mylsfr->seed);
     free(mylsfr);
 }
+
+char *arraytostring(int *array, LSFR* mylsfr){
+    char string[strlen(mylsfr->lenght +2)];
+    int index = 0;
+    for (int i = 0; i<mylsfr->lenght; i++)
+    index += sprintf(&string[index], "%d", array[i]);
+    return string;
+}
+static int *stringtoarray(char *string){
+    int array[strlen(string)];
+    for(int i =0; i<strlen(string) && string[i] != '\0'; i++){
+        array[i] = atoi(string[i]);
+    }
+
+    return array;
+}
+
 // initialisation of the setters
  void set_seed(LSFR *mylsfr, char *seed){
-    mylsfr->seed = seed;
+    for(unsigned int i = 0; i<mylsfr->lenght; i++){
+        mylsfr->seed[i] = stringtoarray(seed)[i];
+    }
 }
 
  void set_tap(LSFR *mylsfr, unsigned int tap){
@@ -92,10 +127,10 @@ LSFR *constructor(){
 }
 
 // initialisation of the getters
- char* get_seed(LSFR *mylsfr){
-    assert(mylsfr != NULL);
-    return mylsfr->seed;
-}
+//  char* get_seed(LSFR *mylsfr){
+//     assert(mylsfr != NULL);
+//     return mylsfr->seed;
+// }
  int get_tap(LSFR *mylsfr){
     assert( mylsfr != NULL);
     return mylsfr->tap;
