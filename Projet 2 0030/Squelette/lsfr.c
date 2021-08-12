@@ -13,7 +13,7 @@ struct LSFR_t{
 
 
 LSFR *initialisation(char *seed, unsigned int tap){
-
+    assert(seed != NULL && tap > 0);
 
     // start with getting the lenght of our seed
 
@@ -21,9 +21,17 @@ LSFR *initialisation(char *seed, unsigned int tap){
 
 
     if(tap >= seed_lenght){
-        printf("ERROR, the tap value is not within the seed");
+        printf("ERROR, the tap value is not within the seed\n");
         return 0;
     }
+    // checking the seed content
+    for(int i= 0; i<seed_lenght; i++){
+        if(seed[i] != '0' && seed[i] != '1'){
+            printf("unallowed caracters in the seed\n");
+            return 0;
+        }
+    }
+
     // create our lsfr using our constructor
     LSFR *mylsfr = constructor();
 
@@ -33,6 +41,10 @@ LSFR *initialisation(char *seed, unsigned int tap){
     set_tap(mylsfr, tap);
 
     return mylsfr;
+}
+
+static int *stringtoarray(char *string){
+
 }
 
 int operation(LSFR *mylsfr){
@@ -55,41 +67,6 @@ int operation(LSFR *mylsfr){
 char *transformation(LSFR *mylsfr){
     assert(mylsfr != NULL);
     
-    unsigned int lenght = get_lenght(mylsfr);
-
-    // allocate memory for  a temporary seed
-    char *seed = malloc(sizeof(char)*lenght);
-    //allocate memory for an array of integers 
-    int *int_seed = malloc(sizeof(int)* lenght);
-
-    // put the seed in our sturcture in our newly allocated space
-    strcpy(seed, get_seed(mylsfr));
-    
-    // transform our seed into an array of integers and store it in aur allocated array
-    char *temporary_seed = malloc(sizeof(char)*lenght);
-      for(unsigned int i =0; i<lenght; i++){
-        int_seed[i] = atoi(&seed[i]);
-    }
-    // use sprintf to convert our array of integers into a string
-    int index;
-    for(unsigned int i = 0; i < lenght; i++){
-        if(i < lenght-1){
-            index += sprintf(&temporary_seed[index], "%d", int_seed[i+1]);
-        }else{
-            index += sprintf(&temporary_seed, "%d", operation(mylsfr));
-        }
-    }
-
-    // put the new seed in our structure
-    set_seed(mylsfr, temporary_seed);
-
-    // free our temporary seed after use
-    free(temporary_seed);
-    free(seed);
-    free(int_seed);
-
-    return get_seed(mylsfr);
-
 }
 // initialisation of the constructor
 LSFR *constructor(){
