@@ -8,8 +8,9 @@ int main()
    
     LSFR *mylsfr = initialisation("01101000010", 8);
     
-    printf("%s,  %d",transformation(mylsfr), operation(mylsfr));
-    
+    printf(" operation result :%d\n", operation(mylsfr));
+    //printf("transformation : %s", transformation(mylsfr));
+    transformation(mylsfr);
     destructor(mylsfr);
   
 }

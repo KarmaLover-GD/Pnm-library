@@ -21,7 +21,7 @@ void set_tap(LSFR *mylsfr, unsigned int tap);
 void set_seed(LSFR *mylsfr, char *seed);
 void set_lenght(LSFR *mylsfr, unsigned int lenght);
 
-
+char *arraytostring(int *array, LSFR *mylsfr);
 // constructor and destructor
 
 LSFR *constructor();

@@ -43,6 +43,11 @@ LSFR *initialisation(char *seed, unsigned int tap){
     set_lenght(mylsfr, seed_lenght);
     set_tap(mylsfr, tap);
     set_seed(mylsfr, seed);
+    printf("Seed :");
+    for(int i = 0;i < seed_lenght; i++){
+        printf( "%d", mylsfr->seed[i]);
+    }
+    printf(" Lenght :%d,  tap :%d,", mylsfr->lenght, mylsfr->tap);
 
     return mylsfr;
 }
@@ -54,7 +59,7 @@ int operation(LSFR *mylsfr){
 
     int new_lower_bit;
   
-    new_lower_bit = mylsfr->seed[mylsfr->lenght-1-mylsfr->tap] ^ mylsfr->seed[1];
+    new_lower_bit = mylsfr->seed[mylsfr->lenght] ^ mylsfr->seed[mylsfr->tap+1];
 
 
     return new_lower_bit;
@@ -73,11 +78,13 @@ char *transformation(LSFR *mylsfr){
    for(unsigned int i = 0; i<mylsfr->lenght; i++){
        mylsfr->seed[i] = newseed[i];
    } 
-   char result[255];
+//    char result[255];
 
-   strcpy(result, arraytostring(mylsfr->seed, mylsfr));
+//    strcpy(result, arraytostring(mylsfr->seed, mylsfr));
+    
+    
 
-   return result;
+   return ;
 }
 // initialisation of the constructor
 LSFR *constructor(){
@@ -102,19 +109,14 @@ char *arraytostring(int *array, LSFR* mylsfr){
     index += sprintf(&string[index], "%d", array[i]);
     return string;
 }
-static int *stringtoarray(char *string){
-    int array[strlen(string)];
-    for(int i =0; i<strlen(string) && string[i] != '\0'; i++){
-        array[i] = atoi(string[i]);
-    }
 
-    return array;
-}
 
 // initialisation of the setters
  void set_seed(LSFR *mylsfr, char *seed){
-    for(unsigned int i = 0; i<mylsfr->lenght; i++){
-        mylsfr->seed[i] = stringtoarray(seed)[i];
+     int number = atoi(seed);
+    for(unsigned int i = 0; i < mylsfr->lenght; i++){
+        mylsfr->seed[i] = number %10;
+        number /= 10;
     }
 }
 
