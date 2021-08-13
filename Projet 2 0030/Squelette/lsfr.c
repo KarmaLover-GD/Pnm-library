@@ -78,13 +78,34 @@ char *transformation(LSFR *mylsfr){
    for(unsigned int i = 0; i<mylsfr->lenght; i++){
        mylsfr->seed[i] = newseed[i];
    } 
-//    char result[255];
 
-//    strcpy(result, arraytostring(mylsfr->seed, mylsfr));
-    
-    
+    // transforming our array of integers into a string.
 
-   return ;
+    // using itoa 
+
+    // and strncat
+    int lenght = mylsfr->lenght;
+    char digit[5];
+    char *strseed= malloc(sizeof(char)*mylsfr->lenght);
+
+
+    for(int i =0; i<mylsfr->lenght; i++){
+        
+        sprintf(digit, "%d", mylsfr->seed[i]);
+        //printf("%s", digit);
+        if(i == 0){
+            strcpy(strseed, digit);
+        }else{
+            strncat(strseed, &digit, 1);
+        }
+
+        
+         //printf("%s\n", strseed);
+        
+    }
+
+
+   return strseed;
 }
 // initialisation of the constructor
 LSFR *constructor(){
@@ -114,9 +135,14 @@ char *arraytostring(int *array, LSFR* mylsfr){
 // initialisation of the setters
  void set_seed(LSFR *mylsfr, char *seed){
      int number = atoi(seed);
+     int temp[mylsfr->lenght];
     for(unsigned int i = 0; i < mylsfr->lenght; i++){
-        mylsfr->seed[i] = number %10;
+        temp[i] = number %10;
         number /= 10;
+    }
+    // put the array int the right order
+    for(int i = 0; i<mylsfr->lenght; i++){
+        mylsfr->seed[i] = temp[mylsfr->lenght-1-i];
     }
 }
 
