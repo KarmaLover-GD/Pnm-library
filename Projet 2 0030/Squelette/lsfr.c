@@ -22,6 +22,11 @@ LSFR *initialisation(char *seed, unsigned int tap){
 
     if(tap >= seed_lenght){
         printf("ERROR, the tap value is not within the seed\n");
+        printf(" if you want to chose a enw tap value, press 1 (tap value should be between 0 and %d)\n press anything else to terminate the program", seed_lenght);
+        int choice;
+        scanf("\n %d", & choice);
+        scanf("enter your new tap value %d", &tap);
+        initialisation(seed, tap);
         return 0;
     }
     // checking the seed content

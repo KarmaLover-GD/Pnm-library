@@ -387,7 +387,18 @@ void destroy_pnm(PNM *image){
 void check_extension(char *input_file, char *output_file, char *format_file, PNM *image){
     char input_extension[5] = "";
     char output_extension[5] = "";
-
+    if(check_filename(output_file) != NULL){
+        printf("output file contains the unallowed character '%c' ", check_filename(output_file));
+        printf("\n Do you want to change the name of your output file ?");
+        printf("\n press 1 for to retry and anything else to terminate the program");
+        int choice;
+        scanf("\n %d", & choice);
+        if(choice == 1){
+            printf("chose your new output type the name of you new output file\n");
+            scanf("%s", output_file);
+            check_extension(input_file, output_file, format_file, image);
+        }
+    }
    for(int i = 3; i>0; i--){
       strncat(input_extension, &input_file[strlen(input_file)-i], 1);
       strncat(output_extension, &output_file[strlen(output_file)-i], 1);
@@ -438,19 +449,56 @@ void check_extension(char *input_file, char *output_file, char *format_file, PNM
 }
 
 
-int check_filename(char *filename){
-    for(int i =0; i<strlen(filename)-1; i++){
+char check_filename(char *filename){
+    for(int i =0; i<strlen(filename); i++){
         
-       if(strncmp(filename[i], "/", 1) != 0 && strncmp(filename[i], "\\", 1) != 0 && strncmp(filename[i], ":", 1) != 0 && strncmp(filename[i], "*", 1) != 0 &&
-       strncmp(filename[i], "?", 1) != 0 && strncmp(filename[i], """", 1) != 0 && strncmp(filename[i], "<", 1) != 0 && strncmp(filename[i], ">", 1) != 0 &&
-       strncmp(filename[i], "|", 1) != 0){
-           printf("%c", filename[i]);
-           return 1;
+  for(long unsigned int i = 0; i < strlen(filename); i++){
+    if(filename[i] == '/' || filename[i] == ':' || filename[i] == '*' || filename[i] == '?' || filename[i] == '"'       
+                          || filename[i] == '<' || filename[i] == '>' || filename[i] == '|' || filename[i] == '\\'){           
+        return filename[i];
+      }
+  }
+  return NULL;
+}
+}
 
-       }else{
-           printf("%c", filename[i]);
-           return 0;
-       }
+// Getters and setters
 
+int get_type_pnm(PNM *image){
+
+    return image->type;
+
+}
+
+int get_lines(PNM * image){
+    return image->lines;
+}
+int get_columns(PNM *image){
+    return image->columns;
+}
+int **get_matrix(PNM *image){
+
+    return image->matrice;
+}
+
+
+
+
+void set_matrix(PNM *image, int x, int y, int value){
+
+   if(image->type == 1 || image->type == 2){
+       for(int i=0; i<image->lines; i++){
+        for(int j =0; j<image->columns; j++){
+            image->matrice[x][y] = value;
+            }
+        }
     }
 }
+// struct PNM_t {
+//     int lines;
+//     int columns;
+//     int max_value;
+//     int type;
+//     int **matrice;
+    
+// };

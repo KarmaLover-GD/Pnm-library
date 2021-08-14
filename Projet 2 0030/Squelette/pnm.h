@@ -92,5 +92,12 @@ void check_extension(char *input_file, char *output_file, char *format_file, PNM
 /*
 */
 int check_filename(char * filename);
+//   Getters .
+int get_type_pnm(PNM *image);
+int get_lines(PNM * image);
+int get_columns(PNM *image);
+int **get_matrix(PNM *image);
+
+void set_matrix(PNM *image, int x, int y, int value);
 #endif // __PNM__
 
