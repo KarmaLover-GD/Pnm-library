@@ -7,11 +7,13 @@ int main()
 {
    
     LSFR *mylsfr = initialisation("01101000010", 8);
-    // for(int i=0; i<10; i++){
-    //     printf("%s %d", operation(mylsfr), transformation(mylsfr));
-    // }
-    printf("operation result :%d\n", operation(mylsfr));
-    printf("transformation : %s", transformation(mylsfr));
+    
+    for(int i=0; i<10; i++){
+        int r = generation(mylsfr, 5);
+        printf("%s %d\n", transformation(mylsfr), r);
+        
+    }
+    
     //transformation(mylsfr);
     destructor(mylsfr);
   

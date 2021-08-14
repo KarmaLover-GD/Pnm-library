@@ -9,6 +9,8 @@ LSFR *initialisation(char *seed, unsigned int bits);
 int operation(LSFR *mylsfr);
 
 char *transformation(LSFR *mylsfr);
+
+int generation(LSFR *mylsfr, int nombre);
 // getters
 
 int get_lenght(LSFR *mylsfr);
@@ -21,8 +23,7 @@ void set_tap(LSFR *mylsfr, unsigned int tap);
 void set_seed(LSFR *mylsfr, char *seed);
 void set_lenght(LSFR *mylsfr, unsigned int lenght);
 
-char *arraytostring(int *array, LSFR *mylsfr);
-// constructor and destructor
+
 
 LSFR *constructor();
 void destructor(LSFR *mylsfr);
