@@ -13,19 +13,10 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
-
 #include "pnm.h"
-#define BUFFERSIZE 1024
-/**
- * Définition de la structure RGB
- *
- */
 
-typedef struct{
-   int red;
-   int green;
-   int blue;
-}RGB;
+
+#define BUFFERSIZE 1024
 
 /**
  * Définition du type opaque PNM
@@ -41,17 +32,20 @@ struct PNM_t {
     int **matrice;
     
 };
+
+
+//--------------------------------------------------
 static void pass_comment(FILE *fic, char*buffer){
    assert(fic != NULL && buffer != NULL);
 
    do
    fgets(buffer, 100, fic);
-   while(strncmp(buffer, "#", 1) == 0);
-   
+   while(strncmp(buffer, "#", 1) == 0);  
 }
-
+//-----------------------------------------------
+//-----------------------------------------------
 static int get_type(FILE* fic, char *buffer) {
-
+    assert(fic != NULL && buffer != NULL);
     pass_comment(fic, buffer);
 
         if (strncmp(buffer, "P1", 2) == 0) {
@@ -70,11 +64,10 @@ static int get_type(FILE* fic, char *buffer) {
             
     fclose(fic);
 }
-
-
-
+//-----------------------------------------------
+//-----------------------------------------------
 static PNM *build_PNM(int type, int lines, int columns, int max_val){
-    
+    assert(type >0 && type <4 && lines > 0 && columns >0 && max_val >= 0);
     PNM *image = malloc(sizeof(PNM));
     
      if(image == NULL){
@@ -94,10 +87,7 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val){
         for(int i = 0; i<lines; i++){
             image->matrice[i] = malloc(sizeof(int)*columns);
         }
-        
-        
-       
-        
+               
         if(image->matrice == NULL){
         for(int i =0; i<lines; i++){
             free(image->matrice[i]);
@@ -165,7 +155,8 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val){
      }
         
     
-
+//-----------------------------------------------
+//-----------------------------------------------
 static PNM *fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image){
     
     int pixel;
@@ -215,7 +206,8 @@ static PNM *fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image)
     }
     return image;
 }
-
+//-----------------------------------------------
+//-----------------------------------------------
 int load_pnm(PNM **image, char* filename) {
     assert(filename != NULL && image != NULL);
     //printf("Filename : %s", filename);
@@ -292,7 +284,8 @@ int load_pnm(PNM **image, char* filename) {
 
    return 0;
 }
-
+//-----------------------------------------------
+//-----------------------------------------------
 int write_pnm(PNM *image, char* filename) {
     assert(filename != NULL && image != NULL);
 
@@ -349,7 +342,8 @@ int write_pnm(PNM *image, char* filename) {
    return 0;
 }
 
-
+//-----------------------------------------------
+//-----------------------------------------------
 void destroy_pnm(PNM *image){
     assert(image != NULL);
     switch(image->type){
@@ -388,11 +382,23 @@ void destroy_pnm(PNM *image){
 
 }
 
-
+//-----------------------------------------------
+//-----------------------------------------------
 void check_extension(char *input_file, char *output_file, char *format_file, PNM *image){
     char input_extension[5] = "";
     char output_extension[5] = "";
-
+    if(check_filename(output_file) != NULL){
+        printf("output file contains the unallowed character '%c' ", check_filename(output_file));
+        printf("\n Do you want to change the name of your output file ?");
+        printf("\n press 1 for to retry and anything else to terminate the program");
+        int choice;
+        scanf("\n %d", & choice);
+        if(choice == 1){
+            printf("chose your new output type the name of you new output file\n");
+            scanf("%s", output_file);
+            check_extension(input_file, output_file, format_file, image);
+        }
+    }
    for(int i = 3; i>0; i--){
       strncat(input_extension, &input_file[strlen(input_file)-i], 1);
       strncat(output_extension, &output_file[strlen(output_file)-i], 1);
@@ -443,19 +449,15 @@ void check_extension(char *input_file, char *output_file, char *format_file, PNM
 }
 
 
-int check_filename(char *filename){
-    for(int i =0; i<strlen(filename)-1; i++){
+char check_filename(char *filename){
+    for(int i =0; i<strlen(filename); i++){
         
-       if(strncmp(filename[i], "/", 1) != 0 && strncmp(filename[i], "\\", 1) != 0 && strncmp(filename[i], ":", 1) != 0 && strncmp(filename[i], "*", 1) != 0 &&
-       strncmp(filename[i], "?", 1) != 0 && strncmp(filename[i], """", 1) != 0 && strncmp(filename[i], "<", 1) != 0 && strncmp(filename[i], ">", 1) != 0 &&
-       strncmp(filename[i], "|", 1) != 0){
-           printf("%c", filename[i]);
-           return 1;
-
-       }else{
-           printf("%c", filename[i]);
-           return 0;
-       }
-
-    }
+  for(long unsigned int i = 0; i < strlen(filename); i++){
+    if(filename[i] == '/' || filename[i] == ':' || filename[i] == '*' || filename[i] == '?' || filename[i] == '"'       
+                          || filename[i] == '<' || filename[i] == '>' || filename[i] == '|' || filename[i] == '\\'){           
+        return filename[i];
+      }
+  }
+  return NULL;
+}
 }
