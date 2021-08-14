@@ -55,23 +55,22 @@ int operation(LSFR *mylsfr){
     new_lower_bit = mylsfr->seed[0] ^ mylsfr->seed[mylsfr->lenght-mylsfr->tap-1];
     //printf("%d XOR %d\n", mylsfr->seed[mylsfr->lenght] ^ mylsfr->seed[mylsfr->tap+1]);
 
-
-    return new_lower_bit;
-}
-
-char *transformation(LSFR *mylsfr){
-    assert(mylsfr != NULL);
-    int newseed[mylsfr->lenght];
-    int last_bit = operation(mylsfr);
-
+     int newseed[mylsfr->lenght];
     for(unsigned int i = 0; i<mylsfr->lenght-1; i++){
         newseed[i] = mylsfr->seed[i+1];
     }
-    newseed[mylsfr->lenght-1] = last_bit;
+    newseed[mylsfr->lenght-1] = new_lower_bit;
 
    for(unsigned int i = 0; i<mylsfr->lenght; i++){
        mylsfr->seed[i] = newseed[i];
    } 
+    return new_lower_bit;
+}
+
+char *string(LSFR *mylsfr){
+    assert(mylsfr != NULL);
+   
+ 
 
     // transforming our array of integers into a string.
     int lenght = mylsfr->lenght;
@@ -107,7 +106,7 @@ int generation(LSFR *mylsfr, int nombre){
     for(int i =0; i<nombre; i++){
         bit = operation(mylsfr);
         result = (result *2) + bit;
-        transformation(mylsfr);
+        
     }
 
     return result;

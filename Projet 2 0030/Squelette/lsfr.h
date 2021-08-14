@@ -8,7 +8,7 @@ LSFR *initialisation(char *seed, unsigned int bits);
 
 int operation(LSFR *mylsfr);
 
-char *transformation(LSFR *mylsfr);
+char *string(LSFR *mylsfr);
 
 int generation(LSFR *mylsfr, int nombre);
 // getters

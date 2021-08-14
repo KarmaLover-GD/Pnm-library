@@ -10,11 +10,11 @@ int main()
     
     for(int i=0; i<10; i++){
         int r = generation(mylsfr, 5);
-        printf("%s %d\n", transformation(mylsfr), r);
+        printf("%s %d\n", string(mylsfr), r);
         
     }
     
-    //transformation(mylsfr);
+    //string(mylsfr);
     destructor(mylsfr);
   
 }
