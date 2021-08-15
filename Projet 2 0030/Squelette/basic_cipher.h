@@ -9,6 +9,11 @@
  * Ce fichier contient les déclarations de types
  *  et les prototypes des fonctions pour le chiffrement basique d'images.
  */
+
+
+#ifndef __BASICCIPHER__
+#define __BASICCIPHER__
+
  #include <stdio.h>
  #include <stdlib.h>
  #include <assert.h>
@@ -19,78 +24,15 @@
  #include "lfsr.h"
  #include "pnm.h"
 
+/*
+*
+* this function creates a new enrypted image. and can alse be used to decryp the image the same way.
+* 
+*
+*
+*/
+
 void encryption(LSFR *mylsfr,   PNM *image, char *filename);
-void compilation_args(int argc, char *argv[], char *optstring, char **seed, char **input_file, char **output_file, int *tap );
-
-
-
-
-
-#ifndef __BASICCIPHER__
-#define __BASICCIPHER__
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 #endif // __BASICCIPHER__

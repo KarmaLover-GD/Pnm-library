@@ -494,11 +494,3 @@ void set_matrix(PNM *image, int x, int y, int value){
         }
     }
 }
-// struct PNM_t {
-//     int lines;
-//     int columns;
-//     int max_value;
-//     int type;
-//     int **matrice;
-    
-// };
