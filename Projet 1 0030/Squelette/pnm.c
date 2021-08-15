@@ -46,14 +46,18 @@ static void pass_comment(FILE *fic, char*buffer){
 //-----------------------------------------------
 static int get_type(FILE* fic, char *buffer) {
     assert(fic != NULL && buffer != NULL);
-    pass_comment(fic, buffer);
 
+    // Read the line of the file which contains the magic number and put it in the buffer.
+    pass_comment(fic, buffer);
+        //returns 1 for pbm
         if (strncmp(buffer, "P1", 2) == 0) {
             printf("%s", buffer);
             return 1;
+        // returns 2 for pgm
         } else if (strncmp(buffer, "P2", 2) == 0) {
             printf("%s", buffer);
             return 2;
+        // returns 3 for ppm
         } else if (strncmp(buffer, "P3", 2) == 0) {
             printf("%s", buffer);
             return 3;
@@ -74,7 +78,7 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val){
          printf("erreur allocation");
          return NULL;
      }
-    
+    // fill the first parts of the sturcture and allocate memory for the matrix according to the type and return the image
     switch (type)
     {
     case 1:
@@ -149,10 +153,15 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val){
             printf("erreur encodage matrice");
             return NULL;
         }
-
+         break;
+         default :
+            printf("Couldn't get the magic number from the first line !");
+            return -3;
     }
+       
+    
     return image;
-     }
+    }
         
     
 //-----------------------------------------------
@@ -164,9 +173,10 @@ static PNM *fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image)
     
     switch (type)
     {
+    // read the matrix from the file and fill it in our structure
     case 1:
 
-        //pass_comment(fic, buffer);
+       
        
         for(int i = 0; i<lines; i++){
             for(int j =0; j<columns; j++){
@@ -220,7 +230,7 @@ int load_pnm(PNM **image, char* filename) {
         if(choice == 1){
             printf("enter you input file's name\n");
             scanf("%s", filename);
-            load_pnm(&image, filename);
+            load_pnm(image, filename);
         }else{
         fclose(fic);
         printf("erreur à l'ouverture du fic");

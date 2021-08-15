@@ -30,8 +30,9 @@ int main(int argc, char *argv[]) {
    int value;
 
    
-
+    
    while((value=getopt(argc, argv, optstring)) != EOF){
+       
     switch(value) {
         case 'f':
             format_file = optarg;
@@ -48,8 +49,8 @@ int main(int argc, char *argv[]) {
     }// fin switch
    }
    PNM *image;
-   
-
+   printf("Value %d", value);
+    
   check_extension(input_file, output_file, format_file, image);
 
    return 0;
