@@ -1,7 +1,7 @@
 ###
 ## Makefile
 ## INFO0030: Projet 2
-## Andries Alexandre s196948
+## Ouro-Gomma Marzouk s204743
 ###
 
 #---------------
@@ -16,9 +16,10 @@ LDFLAGS=
 DOXYGEN=doxygen
 OBJ_PNM=main-pnm.o pnm.o
 OBJ_BASIC_CIPHER=main-basic_cipher.o basic_cipher.o pnm.o lfsr.o
-OBJ_ADVCD_CIPHER= main-advanced_cipher.c advanced_cipher.c basic_cipher.o pnm.o lfsr.o
+OBJ_ADVCD_CIPHER=main-advanced_cipher.c advanced_cipher.c basic_cipher.o pnm.o lfsr.o
 OBJ_PNM_TESTS=pnm-test.o pnm.o seatest.o
 OBJ_LFSR_TESTS=lfsr-test.o lfsr.o seatest.o
+
 
 # Files
 EXEC1=pnm
