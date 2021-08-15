@@ -27,7 +27,7 @@ lsfr: $(OBJECTS_PNM)
 	$(LD) -o $(EXEC1) $(OBJECTS_PNM) $(LDFLAGS) $(GDBFLAGS)
 
 basic_cipher:$(OBJECTS_BASIC_CIPHER)
-	$(LD) -o $(EXEC2) $(OBJECTS_BASIC_CIPHER) $(LDFLAGS)
+	$(LD) -o $(EXEC2) $(OBJECTS_BASIC_CIPHER) $(LDFLAGS) $(GDBFLAGS)
 
 main.o: main.c
 	$(CC) -c main.c -o main.o $(CFLAGS) $(GDBFLAGS)

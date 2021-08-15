@@ -25,8 +25,14 @@ LSFR *initialisation(char *seed, unsigned int tap){
         printf(" if you want to chose a enw tap value, press 1 (tap value should be between 0 and %d)\n press anything else to terminate the program", seed_lenght);
         int choice;
         scanf("\n %d", & choice);
-        scanf("enter your new tap value %d", &tap);
+        if(choice == 1){
+            scanf("enter your new tap value %d", &tap);
         initialisation(seed, tap);
+        }else{
+            printf("\n\n Program ended");
+            exit(1);
+        }
+        
         return 0;
     }
     // checking the seed content
