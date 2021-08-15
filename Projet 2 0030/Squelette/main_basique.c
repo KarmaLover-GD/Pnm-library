@@ -23,36 +23,14 @@ int main(int argc, char *argv[]) {
 
    int value;
     PNM *image; 
-   
+  
 
-   while((value=getopt(argc, argv, optstring)) != EOF){
-    switch(value) {
-        case 'i':
-            input_file = optarg;
-            printf("\n%s", optarg);
-            break;
-        case 'o':
-            output_file = optarg;  
-            printf("\n%s", optarg);    
-            break;
-        case 't':
-            tap = optarg;
-            printf("\n%d", optarg);
-            break;
-        case 's':
-            seed = optarg;
-            printf("\n%s", optarg);
-            break;
-         default:
-            printf("Wrong command");
-            break;
-    }// fin switch
-   }
+        
+compilation_args(argc, argv, optstring, &seed, &input_file, &output_file, &tap);
 
-        // printf("\n\nTHE TAP VALUE IS %d\n\n", tap);
-        // printf("\n\nTHE SEED IS %s \n\n", seed);
-        // printf("\n\nTHE INPUT FILE IS %s \n\n", input_file);
-
+        printf("\n\nTHE TAP VALUE IS %d\n\n", tap);
+        printf("\n\nTHE SEED IS %s \n\n", seed);
+        printf("\n\nTHE INPUT FILE IS %s \n\n", input_file);
 if(input_file !=  NULL){
     
     //load_pnm(&image, input_file);

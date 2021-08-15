@@ -20,7 +20,7 @@
  #include "pnm.h"
 
 void encryption(LSFR *mylsfr,   PNM *image, char *filename);
-
+void compilation_args(int argc, char *argv[], char *optstring, char **seed, char **input_file, char **output_file, int *tap );
 #include "lsfr.h"
 #include "pnm.h"
 #

@@ -20,26 +20,53 @@
 #include "pnm.h"
 #include "basique.h"
 
-int **build_matrix(int lines, int columns, int columns_size, int **matrix){
-               matrix = malloc(sizeof(int)* lines);
-                if(matrix == NULL){
-                    free(matrix);
-                    return NULL;
-                }
+// int **build_matrix(int lines, int columns, int columns_size, int **matrix){
+//                matrix = malloc(sizeof(int)* lines);
+//                 if(matrix == NULL){
+//                     free(matrix);
+//                     return NULL;
+//                 }
             
-            for(int i =0; i< lines; i++){
-                matrix[i] = malloc(sizeof(int)*columns*columns_size);
-                    if(matrix[i]== NULL){
-                        for(int j = 0; j<= i; j++){
-                            free(matrix[j]);
-                            free(matrix);
-                            return NULL;
-                        }
-                    }
-            }
-            return matrix;
-}
+//             for(int i =0; i< lines; i++){
+//                 matrix[i] = malloc(sizeof(int)*columns*columns_size);
+//                     if(matrix[i]== NULL){
+//                         for(int j = 0; j<= i; j++){
+//                             free(matrix[j]);
+//                             free(matrix);
+//                             return NULL;
+//                         }
+//                     }
+//             }
+//             return matrix;
+// }
 
+void compilation_args(int argc, char *argv[], char *optstring, char **seed, char **input_file, char **output_file, int *tap ){
+     int value;
+
+   while((value=getopt(argc, argv, optstring)) != EOF){
+    switch(value) {
+        case 'i':
+            *input_file = optarg;
+            printf("\n%s", optarg);
+            break;
+        case 'o':
+            *output_file = optarg;  
+            printf("\n%s", optarg);    
+            break;
+        case 't':
+            *tap = atoi(optarg);
+            printf("\n%s", optarg);
+            break;
+        case 's':
+            *seed = optarg;
+            printf("\n%s", optarg);
+            break;
+         default:
+            printf("Wrong command");
+            break;
+    }// fin switch
+   }
+}
 
 void encryption(LSFR *mylsfr,   PNM *image, char *filename){
     assert(mylsfr != NULL && image != NULL && filename != NULL);
