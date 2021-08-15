@@ -220,7 +220,7 @@ int load_pnm(PNM **image, char* filename) {
         if(choice == 1){
             printf("enter you input file's name\n");
             scanf("%s", filename);
-            load_pnm(&image, filename);
+            load_pnm(image, filename);
         }else{
         fclose(fic);
         printf("erreur à l'ouverture du fic");

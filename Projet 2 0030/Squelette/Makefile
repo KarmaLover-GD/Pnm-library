@@ -1,47 +1,87 @@
-### 
-## Makefile skeleton
-## INFO0030: Projet 1
-## 
-### 
+###
+## Makefile
+## INFO0030: Projet 2
+## Andries Alexandre s196948
+###
 
-## Variables
+#---------------
+# Variables
+#---------------
 
 # Tools & flags
 CC=gcc
 CFLAGS=--std=c99 --pedantic -Wall -W -Wmissing-prototypes
 LD=gcc
 LDFLAGS=
-GDBFLAGS= -g
+DOXYGEN=doxygen
+OBJ_PNM=main-pnm.o pnm.o
+OBJ_BASIC_CIPHER=main-basic_cipher.o basic_cipher.o pnm.o lfsr.o
+OBJ_ADVCD_CIPHER= main-advanced_cipher.c advanced_cipher.c basic_cipher.o pnm.o lfsr.o
+OBJ_PNM_TESTS=pnm-test.o pnm.o seatest.o
+OBJ_LFSR_TESTS=lfsr-test.o lfsr.o seatest.o
 
 # Files
-EXEC1=lsfr
+EXEC1=pnm
 EXEC2=basic_cipher
-MODULES=main.c lsfr.c
-OBJECTS_PNM=main.o lsfr.o
-OBJECTS_BASIC_CIPHER=main_basique.o basique.o pnm.o lsfr.o
-## Rules
+EXEC3=advanced_cipher
+EXEC4=pnm_tests
+EXEC5=lfsr_tests
 
-all: $(EXEC1) (EXEC2)
- 
-lsfr: $(OBJECTS_PNM)
-	$(LD) -o $(EXEC1) $(OBJECTS_PNM) $(LDFLAGS) $(GDBFLAGS)
+#---------------
+# Rules
+#---------------
 
-basic_cipher:$(OBJECTS_BASIC_CIPHER)
-	$(LD) -o $(EXEC2) $(OBJECTS_BASIC_CIPHER) $(LDFLAGS) $(GDBFLAGS)
+all: pnm basic_cipher advanced_cipher lfsr_tests pnm_tests doc
 
-main.o: main.c
-	$(CC) -c main.c -o main.o $(CFLAGS) $(GDBFLAGS)
+pnm: $(OBJ_PNM)
+	$(LD) -o $(EXEC1) $(OBJ_PNM) $(LDFLAGS)
 
-lsfr.o: lsfr.c
-	$(CC) -c lsfr.c -o lsfr.o $(CFLAGS) $(GDBFLAGS)
-basique.o: basique.c
-	$(CC) -c basique.c -o basique.o $(CFLAGS) $(GDBFLAGS)
+basic_cipher: $(OBJ_BASIC_CIPHER)
+	$(LD) -o $(EXEC2) $(OBJ_BASIC_CIPHER) $(LDFLAGS)
 
-main_basique.o:
-	$(CC) -c main_basique.c -o main_basique.o $(CFLAGS) $(GDBFLAGS)
+advanced_cipher: $(OBJ_ADVCD_CIPHER)
+	$(LD) -o $(EXEC3) $(OBJ_ADVCD_CIPHER) $(LDFLAGS)
 
+pnm_tests: $(OBJ_PNM_TESTS)
+	$(LD) -o $(EXEC4) $(OBJ_PNM_TESTS) $(LDFLAGS)
 
+lfsr_tests: $(OBJ_LFSR_TESTS)
+	$(LD) -o $(EXEC5) $(OBJ_LFSR_TESTS) $(LDFLAGS)
+
+main-pnm.o: main-pnm.c
+	$(CC) -c main-pnm.c -o main-pnm.o $(CFLAGS)
+
+lfsr.o: lfsr.c
+	$(CC) -c lfsr.c -o lfsr.o $(CFLAGS)
+
+lfsr-test.o: lfsr-test.c
+	$(CC) -c lfsr-test.c -o lfsr-test.o $(CFLAGS)
+
+seatest.o: seatest.c
+	$(CC) -c seatest.c -o seatest.o $(CFLAGS)
+
+pnm.o: pnm.c
+	$(CC) -c pnm.c -o pnm.o $(CFLAGS)
+
+pnm-test.o: pnm-test.c
+	$(CC) -c pnm-test.c -o pnm-test.o $(CFLAGS)
+
+main-basic_cipher.o: main-basic_cipher.c
+	$(CC) -c main-basic_cipher.c -o main-basic_cipher.o $(CFLAGS)
+
+basic_cipher.o: basic_cipher.c
+	$(CC) -c basic_cipher.c -o basic_cipher.o $(CFLAGS)
+
+#---------------
+# Documentation
+#---------------
+
+doc:
+	$(DOXYGEN) Doxyfile
+
+#---------------
+# Utilitaires
+#---------------
 
 clean:
-	rm -f *.o $(EXEC1) *~ $(EXEC2) *~ 
-
+	rm -f *.o $(EXEC1) *~ $(EXEC2) *~ $(EXEC3) *~ $(EXEC4) *~ $(EXEC5) *~
