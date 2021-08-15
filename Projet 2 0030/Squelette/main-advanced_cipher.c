@@ -20,7 +20,7 @@ int main(int argc, char * argv[]) {
    char *password = argv[6];
    int tap1 = atoi(argv[8]);
 
-    PNM *image = NULL; 
+    PNM *image ; 
   
   int valeur1;
    /*
@@ -64,17 +64,22 @@ int main(int argc, char * argv[]) {
             exit(1);
             break;
     }// fin switch
-    if(input_file1 !=  NULL){
-    
-    load_pnm(&image, input_file1);
-    if(password != NULL){
-        
-    LSFR *mylsfr = initialisation(password_to_seed(password), tap1);
-    encryption(mylsfr, image, output_file1 );
-
-    destroy_pnm(image);
-    destructor(mylsfr);
-    }
+   
 }
 
-   }
+    printf("\nINPUT :%s \nOUTPUT :%s \nPASSWORD :%s  \nTAP : %d\n", input_file1, output_file1, password, tap1);
+    if(input_file1 !=  NULL){
+        
+        load_pnm(&image, input_file1);
+        if(password != NULL){
+            char *converted_pass = malloc(sizeof(char)*strlen(password)+5);
+            strcpy(converted_pass, password_to_seed(password));
+            LSFR *mylsfr = initialisation(converted_pass, tap1);
+            encryption(mylsfr, image, output_file1 );
+
+            destroy_pnm(image);
+            //destructor(mylsfr);
+            //free(converted_pass);
+        }
+    }
+}

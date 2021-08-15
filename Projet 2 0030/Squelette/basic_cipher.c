@@ -25,7 +25,6 @@ void encryption(LSFR *mylsfr,   PNM *image, char *filename){
     assert(mylsfr != NULL && image != NULL && filename != NULL);
 
      int chiff;
-     printf("%d, %d", get_columns(image), get_lines(image));
     if(get_type_pnm(image) == 1 || get_type_pnm(image) == 2){  
         for(int i=0; i<get_lines(image); i++){
             for(int j =0; j<get_columns(image); j++){

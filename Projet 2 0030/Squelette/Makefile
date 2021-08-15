@@ -16,10 +16,10 @@ LDFLAGS=
 DOXYGEN=doxygen
 OBJ_PNM=main-pnm.o pnm.o
 OBJ_BASIC_CIPHER=main-basic_cipher.o basic_cipher.o pnm.o lfsr.o
-OBJ_ADVCD_CIPHER=main-advanced_cipher.c advanced_cipher.c basic_cipher.o pnm.o lfsr.o
+OBJ_ADVCD_CIPHER=main-advanced_cipher.c advanced_cipher.c basic_cipher.o pnm.o lfsr.o 
 OBJ_PNM_TESTS=pnm-test.o pnm.o seatest.o
 OBJ_LFSR_TESTS=lfsr-test.o lfsr.o seatest.o
-
+GDBFLAGS = -g
 
 # Files
 EXEC1=pnm
@@ -41,7 +41,7 @@ basic_cipher: $(OBJ_BASIC_CIPHER)
 	$(LD) -o $(EXEC2) $(OBJ_BASIC_CIPHER) $(LDFLAGS)
 
 advanced_cipher: $(OBJ_ADVCD_CIPHER)
-	$(LD) -o $(EXEC3) $(OBJ_ADVCD_CIPHER) $(LDFLAGS)
+	$(LD) -o $(EXEC3) $(OBJ_ADVCD_CIPHER) $(LDFLAGS) $(GDBFLAGS)
 
 pnm_tests: $(OBJ_PNM_TESTS)
 	$(LD) -o $(EXEC4) $(OBJ_PNM_TESTS) $(LDFLAGS)

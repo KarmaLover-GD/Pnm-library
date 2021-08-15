@@ -27,6 +27,7 @@
 
    char *password_to_seed(char* password){
        assert(password != NULL);
+        
        char * base64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/ " ;
        char *seed;
        char *first_caracter;
@@ -36,12 +37,13 @@
 
 
        for(int i = 0; i<strlen(password); i++){
+        
            //check if the caracter is from base 64
            for(int j = 0; j<strlen(base64); j++){
-               if(password[i] ==  base64[j]){
+               if(password[i] ==  base64[j]) {
                    check = 1;
+                   
                }
-              
            }
            //managing the case where a caracter within the apssword isn't from base 64
             if(check != 1){
@@ -59,12 +61,12 @@
             //translating the caracter to binary with 6 digits and adding it to our seed
             for(int k = 0; k<6; k++){
                 position = i*6 + 5-k; 
-                if(atoi(password[i]) %2 ==0){
+                if((password[i] % 2) == 0){
                     seed_array[position] = 0;
                 }else{
                     seed_array[position] = 1;
                 }
-                k = k/2;
+                password[i] = password[i]/2;
             }
        }
 
@@ -74,7 +76,7 @@
 
 
     for(int i =0; i<strlen(password)*6; i++){
-        
+        printf("%d", seed_array[i]);
         sprintf(digit, "%d", seed_array[i]);
         if(i == 0){
             strcpy(strseed, digit);
@@ -82,8 +84,7 @@
             strncat(strseed, &digit, 1);
         }
         
-        return strseed;
     }
-
+    free(seed_array);
+    return strseed;
    }
-
