@@ -1,16 +1,14 @@
 /**
  * main.c
- * 
+ *
  * Ce fichier contient la fonction main() du programme de manipulation
  * de fichiers pnm.
  *
  * @author: Ouro-Gomma Marzouk S204743
- * @date: 
+ * @date:
  * @projet: INFO0030 Projet 1
  */
 
-
-//hey
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -21,40 +19,39 @@
 
 #include "pnm.h"
 
+int main(int argc, char *argv[])
+{
 
-int main(int argc, char *argv[]) {
+    char *optstring = ":f:i:o:";
+    char *format_file;
+    char *input_file;
+    char *output_file;
 
-   char *optstring = ":f:i:o:";
-   char *format_file;
-   char *input_file;
-   char *output_file;
+    int value;
 
-   int value;
+    while ((value = getopt(argc, argv, optstring)) != EOF)
+    {
 
-   
-    
-   while((value=getopt(argc, argv, optstring)) != EOF){
-       
-    switch(value) {
+        switch (value)
+        {
         case 'f':
             format_file = optarg;
             break;
         case 'i':
             input_file = optarg;
-         break;
-        case 'o':
-            output_file = optarg;            
             break;
-         default:
+        case 'o':
+            output_file = optarg;
+            break;
+        default:
             printf("Wrong command");
             break;
-    }// fin switch
-   }
-   PNM *image;
-   printf("Value %d", value);
-    
-  check_extension(input_file, output_file, format_file, image);
+        } // fin switch
+    }
+    PNM *image;
+    printf("Value %d", value);
 
-   return 0;
+    check_extension(input_file, output_file, format_file, image);
+
+    return 0;
 }
-

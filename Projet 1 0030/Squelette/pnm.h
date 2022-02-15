@@ -23,6 +23,7 @@
 typedef struct PNM_t PNM;
 
 
+
 /**
  * load_pnm
  *
