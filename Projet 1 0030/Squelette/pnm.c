@@ -248,7 +248,7 @@ int write_pnm(PNM *image, char *filename)
         break;
     case PPM:;
 
-        fprintf(fic, "P3\n %d %d\n%d\n", image->lines, image->columns, image->max_value);
+        fprintf(fic, "P3\n%d %d\n%d\n", image->lines, image->columns, image->max_value);
 
         break;
 
@@ -265,7 +265,7 @@ int write_pnm(PNM *image, char *filename)
             fprintf(fic, "\n");
         }
         fclose(fic);
-        
+
     return 0;
 }
 
