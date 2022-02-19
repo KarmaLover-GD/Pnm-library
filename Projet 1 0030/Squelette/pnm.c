@@ -98,7 +98,7 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val)
     image->type = type;
     image->columns = columns;
 
-    image->matrice = malloc(sizeof(uint) * lines*2);
+    image->matrice = malloc(sizeof(uint) * lines * 2);
     if (image->matrice == NULL)
     {
         free(image->matrice);
@@ -147,6 +147,7 @@ static PNM *fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image)
             image->matrice[i][j] = pixel;
         }
     }
+
     return image;
 }
 //-----------------------------------------------
@@ -222,65 +223,49 @@ int load_pnm(PNM **image, char *filename)
 int write_pnm(PNM *image, char *filename)
 {
     assert(filename != NULL && image != NULL);
-   
+
     FILE *fic = fopen(filename, "w");
     if (fic == NULL)
     {
         printf("error, couldn't open new file");
         return -1;
     }
-     uint write_factor = 1;
-        if(image->type == 3)
-            write_factor = 3;
-            
+    uint write_factor = 1;
+    if (image->type == 3)
+        write_factor = 3;
 
     switch (image->type)
     {
-    case 1:;
+    case PBM:;
 
         fprintf(fic, "P1\n%d %d\n", image->lines, image->columns);
-        for (int i = 0; i < image->lines; i++)
-        {
-            for (int j = 0; j < image->columns; j++)
-            {
-                fprintf(fic, "%d ", image->matrice[i][j]);
-            }
-            fprintf(fic, "\n");
-        }
-        fclose(fic);
+
         break;
-    case 2:;
+    case PGM:;
 
         fprintf(fic, "P2\n%d %d\n%d\n", image->lines, image->columns, image->max_value);
-        for (int i = 0; i < image->lines; i++)
-        {
-            for (int j = 0; j < image->columns; j++)
-            {
-                fprintf(fic, "%d ", image->matrice[i][j]);
-            }
-            fprintf(fic, "\n");
-        }
-        fclose(fic);
+
         break;
-    case 3:;
+    case PPM:;
 
         fprintf(fic, "P3\n %d %d\n%d\n", image->lines, image->columns, image->max_value);
-        for (int i = 0; i < image->lines; i++)
-        {
-            for (int j = 0; j < image->columns * 3; j += 3)
-            {
-                fprintf(fic, "%d %d %d ", image->matrice[i][j], image->matrice[i][j + 1], image->matrice[i][j + 2]);
-            }
-            fprintf(fic, "\n");
-        }
-        fclose(fic);
+
         break;
 
     default:
         fclose(fic);
         return -3;
     }
-
+    for (int i = 0; i < image->lines; i++)
+        {
+            for (int j = 0; j < image->columns*write_factor; j++)
+            {
+                fprintf(fic, "%d ", image->matrice[i][j]);
+            }
+            fprintf(fic, "\n");
+        }
+        fclose(fic);
+        
     return 0;
 }
 
