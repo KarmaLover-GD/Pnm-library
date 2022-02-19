@@ -15,9 +15,12 @@
 #include <string.h>
 #include "pnm.h"
 
-#define uint unsigned int
 #define BUFFERSIZE 1024
+#define PBM 1
+#define PGM 2
+#define PPM 3
 
+typedef unsigned int uint;
 /**
  * Définition du type opaque PNM
  *
@@ -49,23 +52,21 @@ static int get_type(FILE *fic, char *buffer)
 
     // Read the line of the file which contains the magic number and put it in the buffer.
     pass_comment(fic, buffer);
-    // returns 1 for pbm
+
     if (strncmp(buffer, "P1", 2) == 0)
     {
         printf("%s", buffer);
-        return 1;
-        // returns 2 for pgm
+        return PBM;
     }
     else if (strncmp(buffer, "P2", 2) == 0)
     {
         printf("%s", buffer);
-        return 2;
-        // returns 3 for ppm
+        return PGM;
     }
     else if (strncmp(buffer, "P3", 2) == 0)
     {
         printf("%s", buffer);
-        return 3;
+        return PPM;
     }
     else
     {
@@ -88,24 +89,33 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val)
         return NULL;
     }
 
-    uint a = 1;
+    uint malloc_factor = 1;
 
     if (type == 3)
-        a = 3;
+        malloc_factor = 3;
 
     image->lines = lines;
     image->type = type;
     image->columns = columns;
 
     image->matrice = malloc(sizeof(uint) * lines*2);
-    
-
-    for(int i =0; i<lines; i++){
-        image->matrice[i] = malloc(sizeof(uint)* a*columns);
+    if (image->matrice == NULL)
+    {
+        free(image->matrice);
+        free(image);
+        printf("Mem Allocation error");
+        return NULL;
     }
 
-    if(image->matrice == NULL){
-        for(int i =0; i<columns*a; i++){
+    for (int i = 0; i < lines; i++)
+    {
+        image->matrice[i] = malloc(sizeof(uint) * malloc_factor * columns);
+    }
+
+    if (image->matrice == NULL)
+    {
+        for (int i = 0; i < columns * malloc_factor; i++)
+        {
             free(image->matrice[i]);
         }
         free(image->matrice);
@@ -114,7 +124,6 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val)
         return NULL;
     }
 
-    
     return image;
 }
 
@@ -122,51 +131,21 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val)
 //-----------------------------------------------
 static PNM *fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image)
 {
+    uint fill_factor = 1;
+
+    if (type == 3)
+        fill_factor = 3;
 
     int pixel;
-    int red, green, blue;
 
-    switch (type)
+    for (int i = 0; i < lines; i++)
     {
-    // read the matrix from the file and fill it in our structure
-    case 1:
-
-        for (int i = 0; i < lines; i++)
+        for (int j = 0; j < columns * fill_factor; j++)
         {
-            for (int j = 0; j < columns; j++)
-            {
-                fscanf(fic, "%d ", &pixel);
+            fscanf(fic, "%d ", &pixel);
 
-                image->matrice[i][j] = pixel;
-            }
+            image->matrice[i][j] = pixel;
         }
-        break;
-    case 2:
-        for (int i = 0; i < lines; i++)
-        {
-            for (int j = 0; j < columns; j++)
-            {
-                fscanf(fic, "%d ", &pixel);
-
-                image->matrice[i][j] = pixel;
-            }
-        }
-        break;
-    case 3:
-        for (int i = 0; i < lines; i++)
-        {
-            for (int j = 0; j < columns * 3; j += 3)
-            {
-
-                fscanf(fic, "%d %d %d ", &red, &green, &blue);
-                image->matrice[i][j] = red;
-                image->matrice[i][j + 1] = green;
-                image->matrice[i][j + 2] = blue;
-            }
-        }
-
-    default:
-        break;
     }
     return image;
 }
@@ -243,13 +222,17 @@ int load_pnm(PNM **image, char *filename)
 int write_pnm(PNM *image, char *filename)
 {
     assert(filename != NULL && image != NULL);
-
+   
     FILE *fic = fopen(filename, "w");
     if (fic == NULL)
     {
         printf("error, couldn't open new file");
         return -1;
     }
+     uint write_factor = 1;
+        if(image->type == 3)
+            write_factor = 3;
+            
 
     switch (image->type)
     {
@@ -296,7 +279,6 @@ int write_pnm(PNM *image, char *filename)
     default:
         fclose(fic);
         return -3;
-        
     }
 
     return 0;
@@ -308,15 +290,12 @@ void destroy_pnm(PNM *image)
 {
     assert(image != NULL);
 
-
     for (int i = 0; i < image->lines; i++)
-        {
-            free(image->matrice[i]);
-        }
-        free(image->matrice);
-        free(image);
-
-   
+    {
+        free(image->matrice[i]);
+    }
+    free(image->matrice);
+    free(image);
 }
 
 //-----------------------------------------------
