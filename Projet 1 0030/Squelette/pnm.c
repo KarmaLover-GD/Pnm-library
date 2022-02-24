@@ -170,7 +170,7 @@ int load_pnm(PNM **image, char *filename)
     assert(filename != NULL && image != NULL);
     // printf("Filename : %s", filename);
     printf("Starting the loading process\n");
-  
+
     FILE *fic = fopen(filename, "r");
     if (fic == NULL)
     {
@@ -181,35 +181,40 @@ int load_pnm(PNM **image, char *filename)
     char buffer[BUFFERSIZE];
 
     int type = get_type(fic, buffer);
-   
+
     int lines;
     int columns;
     int max_val;
 
     pass_comment(fic, buffer);
+    sscanf(buffer, "%d %d", &columns, &lines);
 
     if (type == PBM)
     {
-        printf("buffercontent :%s\n", buffer);
-        sscanf(buffer, "%d %d", &columns, &lines);
-        *image = build_PNM(type, lines, columns, 1);
-        if(*image == NULL){
-            return -1;
-        }
-        fill_matrix(type, lines, columns, fic, *image);
+        max_val = 1;
+    }
+    else if (type == PPM || type == PGM)
+    {
+        sscanf(buffer, "%d", &max_val);
     }
     else
     {
-
-        sscanf(buffer, "%d %d", &columns, &lines);
-
-        pass_comment(fic, buffer);
-        sscanf(buffer, "%d", &max_val);
-        printf("BUFFER CONTENT : %s", buffer);
-        *image = build_PNM(type, lines, columns, max_val);
-        fill_matrix(type, lines, columns, fic, *image);
-   
+        printf("Unknown type");
+        return -3;
     }
+
+    *image = build_PNM(type, lines, columns, max_val);
+    if (*image == NULL)
+    {
+        return -1;
+    }
+
+    fill_matrix(type, lines, columns, fic, *image);
+
+   
+
+  
+
     fclose(fic);
     printf("Image loaded successfully \n");
     return 0;
@@ -218,9 +223,11 @@ int load_pnm(PNM **image, char *filename)
 //-----------------------------------------------
 int write_pnm(PNM *image, char *filename)
 {
+
     assert(filename != NULL && image != NULL);
-    if(check_filename(filename) != 1){
-        return -1
+    if (check_filename(filename) != 1)
+    {
+        return -1;
     }
     printf("Beginning of the writing operation\n");
     FILE *fic = fopen(filename, "w");
@@ -235,17 +242,17 @@ int write_pnm(PNM *image, char *filename)
 
     switch (image->type)
     {
-    case PBM:;
+    case PBM:
 
         fprintf(fic, "P1\n%d %d\n", image->columns, image->lines);
 
         break;
-    case PGM:;
+    case PGM:
 
         fprintf(fic, "P2\n%d %d\n%d\n", image->columns, image->lines, image->max_value);
 
         break;
-    case PPM:;
+    case PPM:
 
         fprintf(fic, "P3\n%d %d\n%d\n", image->columns, image->lines, image->max_value);
 
@@ -288,7 +295,7 @@ void destroy_pnm(PNM *image)
 /*
 returns 0 if extension is not supported and 1 if it is
 */
-int check_extension(char *input_file, char *output_file, char *format_file)
+int match_extension(char *input_file, char *output_file, char *format_file)
 {
     char input_extension[5] = "";
     char output_extension[5] = "";
@@ -322,6 +329,22 @@ int check_extension(char *input_file, char *output_file, char *format_file)
                format_file, input_extension, output_extension);
         return 0;
     }
+}
+int check_extension(char *filename, char *match)
+{
+
+    char extension[5] = "";
+    for (int i = 3; i > 0; i--)
+    {
+        strncat(extension, &filename[strlen(filename) - i], 1);
+    }
+
+    if (strncmp(extension, match, 3) != 0)
+    {
+
+        return 0;
+    }
+    return 1;
 }
 
 char check_filename(char *filename)

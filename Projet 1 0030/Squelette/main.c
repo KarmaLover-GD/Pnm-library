@@ -22,32 +22,33 @@
 int main(int argc, char *argv[])
 {
 
-    char *optstring = ":f:i:o:";
-    char *format_file;
-    char *input_file;
-    char *output_file;
+    // char *optstring = ":f:i:o:";
+    char *format_file = "pgm";
+    char *input_file = "poivron.pgm";
+    char *output_file = "poivr.pgm";
 
     int value;
 
-    while ((value = getopt(argc, argv, optstring)) != EOF)
-    {
+    // while ((value = getopt(argc, argv, optstring)) != EOF)
+    // {
 
-        switch (value)
-        {
-        case 'f':
-            format_file = optarg;
-            break;
-        case 'i':
-            input_file = optarg;
-            break;
-        case 'o':
-            output_file = optarg;
-            break;
-        default:
-            printf("Wrong command");
-            break;
-        } // fin switch
-    }
+    //     switch (value)
+    //     {
+    //     case 'f':
+    //         format_file = optarg;
+    //         break;
+    //     case 'i':
+    //         input_file = optarg;
+    //         break;
+    //     case 'o':
+    //         output_file = optarg;
+    //         break;
+    //     default:
+    //         printf("Wrong command");
+    //         break;
+    //     } // fin switch
+    // }
+    
     PNM *image;
     
 
