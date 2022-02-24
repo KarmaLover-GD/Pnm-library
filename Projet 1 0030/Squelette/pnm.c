@@ -203,22 +203,18 @@ int load_pnm(PNM **image, char *filename)
     }
     else if (type == PPM)
     {
-        
+
         sscanf(buffer, "%d %d", &columns, &lines);
-       
+
         pass_comment(fic, buffer);
         sscanf(buffer, "%d", &max_val);
-      
 
-        if (lines > 0 && columns > 0)
-        {
-            *image = build_PNM(type, lines, columns, max_val);
-            fill_matrix(type, lines, columns, fic, *image);
-        }
+        *image = build_PNM(type, lines, columns, max_val);
+        fill_matrix(type, lines, columns, fic, *image);
     }
 
     fclose(fic);
-
+    printf("Image loaded successfully \n");
     return 0;
 }
 //-----------------------------------------------
@@ -226,7 +222,7 @@ int load_pnm(PNM **image, char *filename)
 int write_pnm(PNM *image, char *filename)
 {
     assert(filename != NULL && image != NULL);
-
+    printf("Beginning of the writing operation\n");
     FILE *fic = fopen(filename, "w");
     if (fic == NULL)
     {
@@ -234,7 +230,7 @@ int write_pnm(PNM *image, char *filename)
         return -1;
     }
     uint write_factor = 1;
-    if (image->type == 3)
+    if (image->type == PPM)
         write_factor = 3;
 
     switch (image->type)
@@ -268,7 +264,7 @@ int write_pnm(PNM *image, char *filename)
         fprintf(fic, "\n");
     }
     fclose(fic);
-
+    printf("image written succesfully\n");
     return 0;
 }
 
@@ -288,14 +284,14 @@ void destroy_pnm(PNM *image)
 
 //-----------------------------------------------
 //-----------------------------------------------
-void check_extension(char *input_file, char *output_file, char *format_file, PNM *image)
+int check_extension(char *input_file, char *output_file, char *format_file)
 {
     char input_extension[5] = "";
     char output_extension[5] = "";
     if (check_filename(output_file) != NULL)
     {
         printf("output file contains the unallowed character '%c' ", check_filename(output_file));
-        exit(1);
+        return 0;
     }
 
     for (int i = 3; i > 0; i--)
@@ -307,22 +303,20 @@ void check_extension(char *input_file, char *output_file, char *format_file, PNM
     if (strncmp(format_file, "pgm", 3) != 0 && strncmp(format_file, "pbm", 3) != 0 && strncmp(format_file, "ppm", 3) != 0)
     {
         printf("Unallowed format chosen, the only allowed formats are pgm, ppm and pbm, you chosed : %s\n\n", format_file);
-        exit(1);
+        return 0;
     }
 
     if ((strncmp(format_file, input_extension, 3) == 0) && (strncmp(format_file, output_extension, 3) == 0))
     {
         printf("Format file :%s Input extension : %s, Output extension : %s\n", format_file, input_extension, output_extension);
         printf("Format : %s, Input : %s, Output : %s\n", format_file, input_file, output_file);
-        load_pnm(&image, input_file);
-        write_pnm(image, output_file);
-        destroy_pnm(image);
+        return 1;
     }
     else
     {
         printf("Different files extensions don't match : Chosen file extension : %s, Input file extension :%s, Output file extension :%s\n",
                format_file, input_extension, output_extension);
-        exit(1);
+        return 0;
     }
 }
 

@@ -51,7 +51,10 @@ int main(int argc, char *argv[])
     PNM *image;
     printf("Value %d", value);
 
-    check_extension(input_file, output_file, format_file, image);
+    check_extension(input_file, output_file, format_file);
+    load_pnm(&image, input_file);
+    write_pnm(image, output_file);
+    destroy_pnm(image);
 
     return 0;
 }
