@@ -211,11 +211,7 @@ int load_pnm(PNM **image, char *filename)
 
     fill_matrix(type, lines, columns, fic, *image);
 
-   
-
-  
-
-    fclose(fic);
+       fclose(fic);
     printf("Image loaded successfully \n");
     return 0;
 }

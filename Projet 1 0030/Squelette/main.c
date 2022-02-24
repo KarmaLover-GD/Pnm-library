@@ -22,37 +22,36 @@
 int main(int argc, char *argv[])
 {
 
-    // char *optstring = ":f:i:o:";
-    char *format_file = "pgm";
-    char *input_file = "poivron.pgm";
-    char *output_file = "poivr.pgm";
+    char *optstring = ":f:i:o:";
+    char *format_file;
+    char *input_file;
+    char *output_file;
 
     int value;
 
-    // while ((value = getopt(argc, argv, optstring)) != EOF)
-    // {
+    while ((value = getopt(argc, argv, optstring)) != EOF)
+    {
 
-    //     switch (value)
-    //     {
-    //     case 'f':
-    //         format_file = optarg;
-    //         break;
-    //     case 'i':
-    //         input_file = optarg;
-    //         break;
-    //     case 'o':
-    //         output_file = optarg;
-    //         break;
-    //     default:
-    //         printf("Wrong command");
-    //         break;
-    //     } // fin switch
-    // }
-    
+        switch (value)
+        {
+        case 'f':
+            format_file = optarg;
+            break;
+        case 'i':
+            input_file = optarg;
+            break;
+        case 'o':
+            output_file = optarg;
+            break;
+        default:
+            printf("Wrong command");
+            break;
+        } // fin switch
+    }
     PNM *image;
     
 
-    check_extension(input_file, output_file, format_file);
+    match_extension(input_file, output_file, format_file);
     load_pnm(&image, input_file);
     write_pnm(image, output_file);
     destroy_pnm(image);
