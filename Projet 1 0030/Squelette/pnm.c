@@ -19,6 +19,10 @@
 #define PBM 1
 #define PGM 2
 #define PPM 3
+#define PBMTAG "P1"
+#define PGMTAG "P2"
+#define PPMTAG "P3"
+#define COMMENTTAG "#"
 
 typedef unsigned int uint;
 /**
@@ -56,31 +60,34 @@ static int get_type(FILE *fic, char *buffer)
     if (strncmp(buffer, "P1", 2) == 0)
     {
         printf("%s", buffer);
+        fclose(fic);
         return PBM;
     }
     else if (strncmp(buffer, "P2", 2) == 0)
     {
         printf("%s", buffer);
+        fclose(fic);
         return PGM;
     }
     else if (strncmp(buffer, "P3", 2) == 0)
     {
         printf("%s", buffer);
+        fclose(fic);
         return PPM;
     }
     else
     {
         printf("%s", buffer);
+        fclose(fic);
         return 0;
     }
-
-    fclose(fic);
 }
 //-----------------------------------------------
 //-----------------------------------------------
 static PNM *build_PNM(int type, int lines, int columns, int max_val)
 {
-    assert(type > 0 && type < 4 && lines > 0 && columns > 0 && max_val >= 0);
+    printf("Starting Memory allocation process \n");
+    assert(type > 0 && type < 4 && lines > 0 && columns > 0 && max_val > 0);
     PNM *image = malloc(sizeof(PNM));
 
     if (image == NULL)
@@ -91,14 +98,14 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val)
 
     uint malloc_factor = 1;
 
-    if (type == 3)
+    if (type == PPM)
         malloc_factor = 3;
 
     image->lines = lines;
     image->type = type;
     image->columns = columns;
 
-    image->matrice = malloc(sizeof(uint) * lines * 2);
+    image->matrice = malloc(sizeof(uint) * lines);
     if (image->matrice == NULL)
     {
         free(image->matrice);
@@ -123,7 +130,7 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val)
         printf("Error Mem Allocation");
         return NULL;
     }
-
+    printf("Memory allocated Succesfully\n");
     return image;
 }
 
@@ -131,9 +138,11 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val)
 //-----------------------------------------------
 static PNM *fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image)
 {
+    assert(type > 3 && type < 4 && lines > 0 && columns > 0 && fic != NULL && image != NULL);
+    printf("Starting MAatrix filling Process\n");
     uint fill_factor = 1;
 
-    if (type == 3)
+    if (type == PPM)
         fill_factor = 3;
 
     int pixel;
@@ -147,7 +156,7 @@ static PNM *fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image)
             image->matrice[i][j] = pixel;
         }
     }
-
+    printf("Matric Filled Succesfullyu\n");
     return image;
 }
 //-----------------------------------------------
@@ -156,7 +165,7 @@ int load_pnm(PNM **image, char *filename)
 {
     assert(filename != NULL && image != NULL);
     // printf("Filename : %s", filename);
-    int choice;
+    printf("Starting the loading process\n");
     FILE *fic = fopen(filename, "r");
     if (fic == NULL)
     {
@@ -173,39 +182,33 @@ int load_pnm(PNM **image, char *filename)
     int max_val;
 
     pass_comment(fic, buffer);
-    if (type == 1)
+    if (type == PBM)
     {
 
-        sscanf(buffer, "%d %d", &lines, &columns);
+        sscanf(buffer, "%d %d", &columns, &lines);
 
-        if (lines > 0 && columns > 0)
-        {
-            *image = build_PNM(type, lines, columns, 0);
-            fill_matrix(type, lines, columns, fic, *image);
-        }
+        *image = build_PNM(type, lines, columns, 1);
+        fill_matrix(type, lines, columns, fic, *image);
     }
-    else if (type == 2)
+    else if (type == PGM)
     {
 
-        sscanf(buffer, "%d %d", &lines, &columns);
+        sscanf(buffer, "%d %d", &columns, &lines);
 
         pass_comment(fic, buffer);
         sscanf(buffer, "%d", &max_val);
 
-        if (lines > 0 && columns > 0)
-        {
-            *image = build_PNM(type, lines, columns, max_val);
-            fill_matrix(type, lines, columns, fic, *image);
-        }
+        *image = build_PNM(type, lines, columns, max_val);
+        fill_matrix(type, lines, columns, fic, *image);
     }
-    else if (type == 3)
+    else if (type == PPM)
     {
-        printf("traitement du fichier ppm\n");
-        sscanf(buffer, "%d %d", &lines, &columns);
-        printf("lines :%d columns :%d\n", lines, columns);
+        
+        sscanf(buffer, "%d %d", &columns, &lines);
+       
         pass_comment(fic, buffer);
         sscanf(buffer, "%d", &max_val);
-        printf("valeur max : %d", max_val);
+      
 
         if (lines > 0 && columns > 0)
         {
@@ -238,17 +241,17 @@ int write_pnm(PNM *image, char *filename)
     {
     case PBM:;
 
-        fprintf(fic, "P1\n%d %d\n", image->lines, image->columns);
+        fprintf(fic, "P1\n%d %d\n", image->columns, image->lines);
 
         break;
     case PGM:;
 
-        fprintf(fic, "P2\n%d %d\n%d\n", image->lines, image->columns, image->max_value);
+        fprintf(fic, "P2\n%d %d\n%d\n", image->columns, image->lines, image->max_value);
 
         break;
     case PPM:;
 
-        fprintf(fic, "P3\n%d %d\n%d\n", image->lines, image->columns, image->max_value);
+        fprintf(fic, "P3\n%d %d\n%d\n", image->columns, image->lines, image->max_value);
 
         break;
 
@@ -257,14 +260,14 @@ int write_pnm(PNM *image, char *filename)
         return -3;
     }
     for (int i = 0; i < image->lines; i++)
+    {
+        for (int j = 0; j < image->columns * write_factor; j++)
         {
-            for (int j = 0; j < image->columns*write_factor; j++)
-            {
-                fprintf(fic, "%d ", image->matrice[i][j]);
-            }
-            fprintf(fic, "\n");
+            fprintf(fic, "%d ", image->matrice[i][j]);
         }
-        fclose(fic);
+        fprintf(fic, "\n");
+    }
+    fclose(fic);
 
     return 0;
 }
