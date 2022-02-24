@@ -57,28 +57,28 @@ static int get_type(FILE *fic, char *buffer)
     // Read the line of the file which contains the magic number and put it in the buffer.
     pass_comment(fic, buffer);
 
-    if (strncmp(buffer, "P1", 2) == 0)
+    if (strncmp(buffer, PBMTAG, 2) == 0)
     {
         printf("%s", buffer);
-        fclose(fic);
+
         return PBM;
     }
-    else if (strncmp(buffer, "P2", 2) == 0)
+    else if (strncmp(buffer, PGMTAG, 2) == 0)
     {
         printf("%s", buffer);
-        fclose(fic);
+
         return PGM;
     }
-    else if (strncmp(buffer, "P3", 2) == 0)
+    else if (strncmp(buffer, PPMTAG, 2) == 0)
     {
         printf("%s", buffer);
-        fclose(fic);
+
         return PPM;
     }
     else
     {
         printf("%s", buffer);
-        fclose(fic);
+
         return 0;
     }
 }
@@ -86,8 +86,11 @@ static int get_type(FILE *fic, char *buffer)
 //-----------------------------------------------
 static PNM *build_PNM(int type, int lines, int columns, int max_val)
 {
-    printf("Starting Memory allocation process \n");
     assert(type > 0 && type < 4 && lines > 0 && columns > 0 && max_val > 0);
+    printf("Starting Memory allocation process \n");
+
+    printf("Input image informations :\ncolumns : %d, lines : %d, type : %d\n", &columns, &lines, &type);
+
     PNM *image = malloc(sizeof(PNM));
 
     if (image == NULL)
@@ -104,8 +107,9 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val)
     image->lines = lines;
     image->type = type;
     image->columns = columns;
+    image->max_value = max_val;
 
-    image->matrice = malloc(sizeof(uint) * lines);
+    image->matrice = malloc(sizeof(uint) * lines * 2);
     if (image->matrice == NULL)
     {
         free(image->matrice);
@@ -138,7 +142,7 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val)
 //-----------------------------------------------
 static PNM *fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image)
 {
-    assert(type > 3 && type < 4 && lines > 0 && columns > 0 && fic != NULL && image != NULL);
+    assert(type > 0 && type < 4 && lines > 0 && columns > 0 && fic != NULL && image != NULL);
     printf("Starting MAatrix filling Process\n");
     uint fill_factor = 1;
 
@@ -176,7 +180,7 @@ int load_pnm(PNM **image, char *filename)
     char buffer[BUFFERSIZE];
 
     int type = get_type(fic, buffer);
-
+    printf("Type : %d\n");
     int lines;
     int columns;
     int max_val;
@@ -184,9 +188,8 @@ int load_pnm(PNM **image, char *filename)
     pass_comment(fic, buffer);
     if (type == PBM)
     {
-
+        printf("buffercontent :%s\n", buffer);
         sscanf(buffer, "%d %d", &columns, &lines);
-
         *image = build_PNM(type, lines, columns, 1);
         fill_matrix(type, lines, columns, fic, *image);
     }
@@ -197,7 +200,7 @@ int load_pnm(PNM **image, char *filename)
 
         pass_comment(fic, buffer);
         sscanf(buffer, "%d", &max_val);
-
+        printf("BUFFER CONTENT : %s", buffer);
         *image = build_PNM(type, lines, columns, max_val);
         fill_matrix(type, lines, columns, fic, *image);
     }
