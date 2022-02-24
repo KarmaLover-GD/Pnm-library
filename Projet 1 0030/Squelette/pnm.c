@@ -170,30 +170,35 @@ int load_pnm(PNM **image, char *filename)
     assert(filename != NULL && image != NULL);
     // printf("Filename : %s", filename);
     printf("Starting the loading process\n");
+  
     FILE *fic = fopen(filename, "r");
     if (fic == NULL)
     {
         printf("Unable to access the chosen input file, the name may be wrong, try again .\n");
-        exit(1);
+        return -2;
     }
 
     char buffer[BUFFERSIZE];
 
     int type = get_type(fic, buffer);
-    printf("Type : %d\n");
+   
     int lines;
     int columns;
     int max_val;
 
     pass_comment(fic, buffer);
+
     if (type == PBM)
     {
         printf("buffercontent :%s\n", buffer);
         sscanf(buffer, "%d %d", &columns, &lines);
         *image = build_PNM(type, lines, columns, 1);
+        if(*image == NULL){
+            return -1;
+        }
         fill_matrix(type, lines, columns, fic, *image);
     }
-    else if (type == PGM)
+    else
     {
 
         sscanf(buffer, "%d %d", &columns, &lines);
@@ -203,19 +208,8 @@ int load_pnm(PNM **image, char *filename)
         printf("BUFFER CONTENT : %s", buffer);
         *image = build_PNM(type, lines, columns, max_val);
         fill_matrix(type, lines, columns, fic, *image);
+   
     }
-    else if (type == PPM)
-    {
-
-        sscanf(buffer, "%d %d", &columns, &lines);
-
-        pass_comment(fic, buffer);
-        sscanf(buffer, "%d", &max_val);
-
-        *image = build_PNM(type, lines, columns, max_val);
-        fill_matrix(type, lines, columns, fic, *image);
-    }
-
     fclose(fic);
     printf("Image loaded successfully \n");
     return 0;
