@@ -284,6 +284,10 @@ void destroy_pnm(PNM *image)
 
 //-----------------------------------------------
 //-----------------------------------------------
+
+/*
+returns 0 if extension is not supported and 1 if it is
+*/
 int check_extension(char *input_file, char *output_file, char *format_file)
 {
     char input_extension[5] = "";
