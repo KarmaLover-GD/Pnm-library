@@ -219,12 +219,15 @@ int load_pnm(PNM **image, char *filename)
 int write_pnm(PNM *image, char *filename)
 {
     assert(filename != NULL && image != NULL);
+    if(check_filename(filename) != 1){
+        return -1
+    }
     printf("Beginning of the writing operation\n");
     FILE *fic = fopen(filename, "w");
     if (fic == NULL)
     {
         printf("error, couldn't open new file");
-        return -1;
+        return -2;
     }
     uint write_factor = 1;
     if (image->type == PPM)
