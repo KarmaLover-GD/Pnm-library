@@ -78,7 +78,7 @@ static int get_type(FILE *fic, char *buffer)
     else
     {
         printf("%s", buffer);
-
+        printf("Unrecognized Magic Number");
         return 0;
     }
 }
@@ -89,7 +89,7 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val)
     assert(type > 0 && type < 4 && lines > 0 && columns > 0 && max_val > 0);
     printf("Starting Memory allocation process \n");
 
-    printf("Input image informations :\ncolumns : %d, lines : %d, type : %d\n", &columns, &lines, &type);
+    printf("Input image informations :\ncolumns : %ls, lines : %ls, type : %ls\n", &columns, &lines, &type);
 
     PNM *image = malloc(sizeof(PNM));
 
@@ -125,7 +125,7 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val)
 
     if (image->matrice == NULL)
     {
-        for (int i = 0; i < columns * malloc_factor; i++)
+        for (uint i = 0; i < columns * malloc_factor; i++)
         {
             free(image->matrice[i]);
         }
@@ -153,7 +153,7 @@ static PNM *fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image)
 
     for (int i = 0; i < lines; i++)
     {
-        for (int j = 0; j < columns * fill_factor; j++)
+        for (uint j = 0; j < columns * fill_factor; j++)
         {
             fscanf(fic, "%d ", &pixel);
 
@@ -182,12 +182,17 @@ int load_pnm(PNM **image, char *filename)
 
     int type = get_type(fic, buffer);
 
+    // if ( type == 0){
+    //     printf('Unrecognized Magic Number');
+    //     return -3;
+    // }
     int lines;
     int columns;
     int max_val;
 
     pass_comment(fic, buffer);
     sscanf(buffer, "%d %d", &columns, &lines);
+    pass_comment(fic, buffer);
 
     if (type == PBM)
     {
@@ -211,7 +216,7 @@ int load_pnm(PNM **image, char *filename)
 
     fill_matrix(type, lines, columns, fic, *image);
 
-       fclose(fic);
+    fclose(fic);
     printf("Image loaded successfully \n");
     return 0;
 }
@@ -223,6 +228,7 @@ int write_pnm(PNM *image, char *filename)
     assert(filename != NULL && image != NULL);
     if (check_filename(filename) != 1)
     {
+        printf("Unothorized character %c found in output file name", check_filename(filename));
         return -1;
     }
     printf("Beginning of the writing operation\n");
@@ -258,9 +264,9 @@ int write_pnm(PNM *image, char *filename)
         fclose(fic);
         return -3;
     }
-    for (int i = 0; i < image->lines; i++)
+    for (uint i = 0; i < image->lines; i++)
     {
-        for (int j = 0; j < image->columns * write_factor; j++)
+        for (uint j = 0; j < image->columns * write_factor; j++)
         {
             fprintf(fic, "%d ", image->matrice[i][j]);
         }
@@ -277,7 +283,7 @@ void destroy_pnm(PNM *image)
 {
     assert(image != NULL);
 
-    for (int i = 0; i < image->lines; i++)
+    for (uint i = 0; i < image->lines; i++)
     {
         free(image->matrice[i]);
     }
@@ -295,7 +301,7 @@ int match_extension(char *input_file, char *output_file, char *format_file)
 {
     char input_extension[5] = "";
     char output_extension[5] = "";
-    if (check_filename(output_file) != NULL)
+    if (check_filename(output_file) != 1)
     {
         printf("output file contains the unallowed character '%c' ", check_filename(output_file));
         return 0;
@@ -345,16 +351,14 @@ int check_extension(char *filename, char *match)
 
 char check_filename(char *filename)
 {
-    for (int i = 0; i < strlen(filename); i++)
-    {
 
-        for (long unsigned int i = 0; i < strlen(filename); i++)
+    for (long unsigned int i = 0; i < strlen(filename); i++)
+    {
+        if (filename[i] == '/' || filename[i] == ':' || filename[i] == '*' || filename[i] == '?' || filename[i] == '"' || filename[i] == '<' || filename[i] == '>' || filename[i] == '|' || filename[i] == '\\')
         {
-            if (filename[i] == '/' || filename[i] == ':' || filename[i] == '*' || filename[i] == '?' || filename[i] == '"' || filename[i] == '<' || filename[i] == '>' || filename[i] == '|' || filename[i] == '\\')
-            {
-                return filename[i];
-            }
+            return filename[i];
         }
-        return NULL;
     }
+
+    return 1;
 }

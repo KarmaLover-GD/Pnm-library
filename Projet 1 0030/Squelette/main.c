@@ -49,11 +49,15 @@ int main(int argc, char *argv[])
         } // fin switch
     }
     PNM *image;
-    
 
-    match_extension(input_file, output_file, format_file);
+    if (match_extension(input_file, output_file, format_file) == 0)
+    {
+        exit(1);
+    }
     load_pnm(&image, input_file);
+
     write_pnm(image, output_file);
+
     destroy_pnm(image);
 
     return 0;
