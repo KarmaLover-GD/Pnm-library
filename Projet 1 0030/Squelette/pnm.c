@@ -4,7 +4,7 @@
  * Ce fic contient les définitions de types et
  * les fonctions de manipulation d'images PNM.
  *
- * @author: Nom Prenom Matricule
+ * @author: Ouro-Gomma Marzouk S204743
  * @date:
  * @projet: INFO0030 Projet 1
  */
@@ -25,6 +25,7 @@
 #define COMMENTTAG "#"
 
 typedef unsigned int uint;
+
 /**
  * Définition du type opaque PNM
  *
@@ -35,62 +36,62 @@ struct PNM_t
     uint lines;
     uint columns;
     uint max_value;
-    uint type;
+    uint type; // 1 = PBM 2 = PGM, 3 = PPM (Consider using Enum)
     uint **matrice;
 };
 
-//--------------------------------------------------
+/*
+This function saves the first line readed that doesn't contain the commenttag
+
+*/
 static void pass_comment(FILE *fic, char *buffer)
 {
     assert(fic != NULL && buffer != NULL);
 
     do
         fgets(buffer, 100, fic);
-    while (strncmp(buffer, "#", 1) == 0);
+    while (strncmp(buffer, COMMENTTAG, 1) == 0);
 }
-//-----------------------------------------------
-//-----------------------------------------------
+/*
+    This function reads the magic number and return the corresponding type ( see comment in PNM_T).
+    If The buffer doesn't contain a recognized tag, returns 0
+*/
+
 static int get_type(FILE *fic, char *buffer)
 {
     assert(fic != NULL && buffer != NULL);
 
     // Read the line of the file which contains the magic number and put it in the buffer.
     pass_comment(fic, buffer);
-    printf("Buffercontent : %s", buffer);
 
     if (strncmp(buffer, PBMTAG, 2) == 0)
     {
-        printf("%s", buffer);
 
         return PBM;
     }
     else if (strncmp(buffer, PGMTAG, 2) == 0)
     {
-        printf("%s", buffer);
 
         return PGM;
     }
     else if (strncmp(buffer, PPMTAG, 2) == 0)
     {
-        printf("%s", buffer);
 
         return PPM;
     }
     else
     {
-        printf("%s", buffer);
-        printf("Unrecognized Magic Number");
+
+        printf("Unrecognized Magic Number\n");
         return 0;
     }
 }
-//-----------------------------------------------
-//-----------------------------------------------
+/*
+Constructor for PNM structure
+*/
 static PNM *build_PNM(int type, int lines, int columns, int max_val)
 {
     assert(type > 0 && type < 4 && lines > 0 && columns > 0 && max_val > 0);
-    printf("Starting Memory allocation process \n");
-
-    printf("Input image informations :\ncolumns : %ls, lines : %ls, type : %ls\n", &columns, &lines, &type);
 
     PNM *image = malloc(sizeof(PNM));
 
@@ -135,12 +136,13 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val)
         printf("Error Mem Allocation");
         return NULL;
     }
-    printf("Memory allocated Succesfully\n");
+    
     return image;
 }
 
-//-----------------------------------------------
-//-----------------------------------------------
+/*
+Loads the data of the file to our structure
+*/
 static PNM *fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image)
 {
     assert(type > 0 && type < 4 && lines > 0 && columns > 0 && fic != NULL && image != NULL);
@@ -164,13 +166,14 @@ static PNM *fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image)
     printf("Matric Filled Succesfullyu\n");
     return image;
 }
-//-----------------------------------------------
-//-----------------------------------------------
+/*
+Load our image using build_pnm and fill_matrix
+*/
 int load_pnm(PNM **image, char *filename)
 {
     assert(filename != NULL && image != NULL);
     // printf("Filename : %s", filename);
-    printf("Starting the loading process\n");
+
 
     FILE *fic = fopen(filename, "r");
     if (fic == NULL)
@@ -180,13 +183,14 @@ int load_pnm(PNM **image, char *filename)
     }
 
     char buffer[BUFFERSIZE];
-    
+
     int type = get_type(fic, buffer);
 
-    if ( type == 0){
-         printf('Unrecognized Magic Number');
-         return -3;
-     }
+    if (type == 0)
+    {
+        printf("Unrecognized Magic Number\n");
+        return -3;
+    }
     int lines;
     int columns;
     int max_val;
@@ -205,24 +209,26 @@ int load_pnm(PNM **image, char *filename)
     }
     else
     {
-        printf("Unknown type");
+        printf("Unknown type\n");
         return -3;
     }
 
     *image = build_PNM(type, lines, columns, max_val);
     if (*image == NULL)
     {
+        printf("Unable to allocate memory for the PNM image\n");
         return -1;
     }
 
     fill_matrix(type, lines, columns, fic, *image);
 
     fclose(fic);
-    printf("Image loaded successfully \n");
+
     return 0;
 }
-//-----------------------------------------------
-//-----------------------------------------------
+/*
+Writes the image stored in the memory in a new file
+*/
 int write_pnm(PNM *image, char *filename)
 {
 
@@ -278,8 +284,9 @@ int write_pnm(PNM *image, char *filename)
     return 0;
 }
 
-//-----------------------------------------------
-//-----------------------------------------------
+/*
+Frees the memory allocated for the file
+*/
 void destroy_pnm(PNM *image)
 {
     assert(image != NULL);
@@ -292,8 +299,6 @@ void destroy_pnm(PNM *image)
     free(image);
 }
 
-//-----------------------------------------------
-//-----------------------------------------------
 
 /*
 returns 0 if extension is not supported and 1 if it is
@@ -333,6 +338,9 @@ int match_extension(char *input_file, char *output_file, char *format_file)
         return 0;
     }
 }
+/*
+returns 0 if extension is not supported and 1 if it is
+*/
 int check_extension(char *filename, char *match)
 {
 
@@ -349,7 +357,9 @@ int check_extension(char *filename, char *match)
     }
     return 1;
 }
-
+/*
+Verify if the filename doesn't contain any  unothorized character returns 0 if it doesn't else returns the unothorized character
+*/
 char check_filename(char *filename)
 {
 

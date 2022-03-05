@@ -54,7 +54,10 @@ int main(int argc, char *argv[])
     {
         exit(1);
     }
-    load_pnm(&image, input_file);
+    if( load_pnm(&image, input_file) != 0){
+        printf("Couldn't load the project succesfully\n");
+        exit(1);
+    }
 
     write_pnm(image, output_file);
 
