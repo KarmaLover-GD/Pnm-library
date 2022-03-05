@@ -56,6 +56,7 @@ static int get_type(FILE *fic, char *buffer)
 
     // Read the line of the file which contains the magic number and put it in the buffer.
     pass_comment(fic, buffer);
+    printf("Buffercontent : %s", buffer);
 
     if (strncmp(buffer, PBMTAG, 2) == 0)
     {
@@ -179,13 +180,13 @@ int load_pnm(PNM **image, char *filename)
     }
 
     char buffer[BUFFERSIZE];
-
+    
     int type = get_type(fic, buffer);
 
-    // if ( type == 0){
-    //     printf('Unrecognized Magic Number');
-    //     return -3;
-    // }
+    if ( type == 0){
+         printf('Unrecognized Magic Number');
+         return -3;
+     }
     int lines;
     int columns;
     int max_val;
