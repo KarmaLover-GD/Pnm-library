@@ -55,6 +55,7 @@ int main(int argc, char *argv[])
         exit(1);
     }
     if( load_pnm(&image, input_file) != 0){
+       
         printf("Couldn't load the project succesfully\n");
         exit(1);
     }

@@ -14,6 +14,7 @@
 #include <assert.h>
 #include <string.h>
 #include "pnm.h"
+#include <ctype.h>
 
 #define BUFFERSIZE 1024
 #define PBM 1
@@ -136,7 +137,7 @@ static PNM *build_PNM(int type, int lines, int columns, int max_val)
         printf("Error Mem Allocation");
         return NULL;
     }
-    
+
     return image;
 }
 
@@ -158,9 +159,15 @@ static PNM *fill_matrix(int type, int lines, int columns, FILE *fic, PNM *image)
     {
         for (uint j = 0; j < columns * fill_factor; j++)
         {
-            fscanf(fic, "%d ", &pixel);
-
-            image->matrice[i][j] = pixel;
+            // CAHNGE FOR RESUBMISSION
+            if (fscanf(fic, "%d ", &pixel) != EOF)
+            {
+                image->matrice[i][j] = pixel;
+            }
+            else
+            {
+                return NULL;
+            }
         }
     }
     printf("Matric Filled Succesfullyu\n");
@@ -173,7 +180,6 @@ int load_pnm(PNM **image, char *filename)
 {
     assert(filename != NULL && image != NULL);
     // printf("Filename : %s", filename);
-
 
     FILE *fic = fopen(filename, "r");
     if (fic == NULL)
@@ -219,8 +225,13 @@ int load_pnm(PNM **image, char *filename)
         printf("Unable to allocate memory for the PNM image\n");
         return -1;
     }
-
-    fill_matrix(type, lines, columns, fic, *image);
+    //CHANGES FOR RESUBMISSION
+    if (fill_matrix(type, lines, columns, fic, *image) == NULL)
+    {
+        printf("the matrix is corrupted.\n");
+        fclose(fic);
+        return -3;
+    }
 
     fclose(fic);
 
@@ -285,6 +296,7 @@ int write_pnm(PNM *image, char *filename)
 }
 
 /*
+takes a pointer to a pnm image as input and
 Frees the memory allocated for the file
 */
 void destroy_pnm(PNM *image)
@@ -299,8 +311,8 @@ void destroy_pnm(PNM *image)
     free(image);
 }
 
-
 /*
+
 returns 0 if extension is not supported and 1 if it is
 */
 int match_extension(char *input_file, char *output_file, char *format_file)
@@ -318,26 +330,31 @@ int match_extension(char *input_file, char *output_file, char *format_file)
         strncat(input_extension, &input_file[strlen(input_file) - i], 1);
         strncat(output_extension, &output_file[strlen(output_file) - i], 1);
     }
-
-    if (strncmp(format_file, "pgm", 3) != 0 && strncmp(format_file, "pbm", 3) != 0 && strncmp(format_file, "ppm", 3) != 0)
+    // CHANGE FOR RESUBMISSION
+    if (strncmp(format_file, "pgm", 3) != 0 && strncmp(format_file, "pbm", 3) != 0 && strncmp(format_file, "ppm", 3) != 0 &&
+        strncmp(format_file, "PGM", 3) != 0 && strncmp(format_file, "PBM", 3) != 0 && strncmp(format_file, "PPM", 3) != 0)
     {
         printf("Unallowed format chosen, the only allowed formats are pgm, ppm and pbm, you chosed : %s\n\n", format_file);
         return 0;
     }
-
-    if ((strncmp(format_file, input_extension, 3) == 0) && (strncmp(format_file, output_extension, 3) == 0))
+    // CHANGES FOR RESUBMISSION
+    for (int i = 0; i < 3; i++)
     {
-        printf("Format file :%s Input extension : %s, Output extension : %s\n", format_file, input_extension, output_extension);
-        printf("Format : %s, Input : %s, Output : %s\n", format_file, input_file, output_file);
-        return 1;
+        if ((tolower(format_file[i]) != input_extension[i]) && (tolower(format_file[i]) != output_extension[i]))
+        {
+            printf("Different files extensions don't match : Chosen file extension : %s, Input file extension :%s, Output file extension :%s\n",
+                   format_file, input_extension, output_extension);
+            return 0;
+        }
+       
     }
-    else
-    {
-        printf("Different files extensions don't match : Chosen file extension : %s, Input file extension :%s, Output file extension :%s\n",
-               format_file, input_extension, output_extension);
-        return 0;
-    }
+    printf("Format file :%s Input extension : %s, Output extension : %s\n", format_file, input_extension, output_extension);
+    printf("Format : %s, Input : %s, Output : %s\n", format_file, input_file, output_file);
+    return 1;
 }
+
+
+
 /*
 returns 0 if extension is not supported and 1 if it is
 */
