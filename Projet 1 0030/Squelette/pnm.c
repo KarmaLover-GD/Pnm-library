@@ -366,13 +366,9 @@ int check_extension(char *filename, char *match)
     {
         strncat(extension, &filename[strlen(filename) - i], 1);
     }
-
-    if (strncmp(extension, match, 3) != 0)
-    {
-
-        return 0;
-    }
-    return 1;
+    //Change for resubmission
+    return !strncmp(extension, match, 3);
+    
 }
 /*
 Verify if the filename doesn't contain any  unothorized character returns 0 if it doesn't else returns the unothorized character
